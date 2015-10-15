@@ -12,7 +12,7 @@ include "header.php";
 					<div class="details">
 						<h1>High Quality<br> Wooden Furnitures<br> That's Built to Last.</h1>
 						<p>
-							You can choose from our wide selection of furnitures on display. Either for your home, office or other estab- lishments. If you can’t find what you need, we can make it according to your needs.
+							You can choose from our wide selection of furnitures on display. Either for your home, office or other establishments. If you can’t find what you need, we can make it according to your needs.
 						</p>
 					</div>
 				</div>
