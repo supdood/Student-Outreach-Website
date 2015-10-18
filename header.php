@@ -72,9 +72,9 @@
         	
     <nav class="main hide-for-medium-down show-for-large-up" id="nav-main" role="navigation"><ul class="row pad">
                 <li class="show-on-sticky trident"><a href="http://www.iupui.edu/index.html">Home</a></li>
-                <a href="index.html">Home</a>
-                <a href="signup.html" class="pull-right">Log In</a>
-                <a href="signup.html" class="pull-right">Sign Up</a>
+                <a href="index.php">Home</a>
+                <a href="login.php" class="pull-right">Log In</a>
+                <a href="signup.php" class="pull-right">Sign Up</a>
         </span>
         </ul>
     </nav>
