@@ -1,4 +1,9 @@
 <?php session_start();
+      //Redirects to login if the current page is not the home, login, or signup page.
+      if (!isset($_SESSION['username']) && basename($_SERVER['SCRIPT_NAME']) != "login.php"
+		&& basename($_SERVER['SCRIPT_NAME']) != "index.php" && basename($_SERVER['SCRIPT_NAME']) != "signup.php") {
+		Header("Location: login.php");
+      }
 ?>
 
 <!DOCTYPE html>
@@ -73,8 +78,12 @@
     <nav class="main hide-for-medium-down show-for-large-up" id="nav-main" role="navigation"><ul class="row pad">
                 <li class="show-on-sticky trident"><a href="http://www.iupui.edu/index.html">Home</a></li>
                 <a href="index.php">Home</a>
-                <a href="login.php" class="pull-right">Log In</a>
-                <a href="signup.php" class="pull-right">Sign Up</a>
+                <?php if (isset($_SESSION['username'])) {
+			echo '<a href="logout.php" class="pull-right">Log Out</a>';
+		} else {
+			echo '<a href="login.php" class="pull-right">Log In</a>';
+ 			echo '<a href="signup.php" class="pull-right">Sign Up</a>';
+		} ?>
         </span>
         </ul>
     </nav>
