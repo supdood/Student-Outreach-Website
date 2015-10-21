@@ -22,10 +22,13 @@ include "header.php";
     <h3>Example Title</h3>
     
     <p>
-    
-        This is just an example of how text is formatted on the page.
-        
-        
+	<?php
+		if (isset($_SESSION['uid'])) {
+			echo "Thank you, ".$_SESSION['uid'].", for registering!"." A confirmation has been sent to the provided email.";
+		} else {
+			echo "This is just an example of how text is formatted on the page.";
+		}
+   	?>
     </p>
     
     
