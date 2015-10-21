@@ -39,6 +39,13 @@
 
 ?>
 
+// <script type="text/javascript">
+//     $("#submit").click(function(){
+//         $(".qa").
+//     })
+
+// </script>
+
 
     
     <!-- A jumbotron to post recent events or announcements at the top of the page.  This can include pictures -->
@@ -60,7 +67,7 @@
        <?php print $surveyHTML?><br> 
     </p>
     
-    
+    <input type="submit" name="submit" value="Submit Survey" style="text-align:center"/>
 
 </div>
 

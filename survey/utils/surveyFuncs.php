@@ -2,6 +2,9 @@
 Survey Functions
 Functions intended to perform survey related operations -->
 <?php
+// Survey Function Globals
+$SurveyTable = array(array());
+
 
 // function ConnectToDatabase()
 // {
@@ -39,7 +42,7 @@ function PopulateQuestions($QuestionResult, $AnswerResult)
 		// if (i % 2 == 0) {ASC} else DESC on $AnswerArray
 		foreach($question as $q)
 		{
-			$tempQStr = "<p><label>".($i).")  ".$q."</label><br>";
+			$tempQStr = "<p class='qa><label class='question' name=q".$i.">".($i).")  ".$q."</label><br>";
 		}
 
 		// // populate answer radio button html
@@ -51,7 +54,7 @@ function PopulateQuestions($QuestionResult, $AnswerResult)
 		$j = 0;
 		foreach($AnswerArray as $ans)
 		{
-			$tempAStr =  $tempAStr . "<input type='radio' name='"."a".$j."'>"."&nbsp".$ans[0]."</input>&nbsp&nbsp&nbsp&nbsp";
+			$tempAStr =  $tempAStr . "<input class='answer' type='radio' name='"."a".$j."'>"."&nbsp".$ans[0]."</input>&nbsp&nbsp&nbsp&nbsp";
 			$j = $j+1;
 		}
 		$str = $str . $tempQStr . $tempAStr . "</p>";

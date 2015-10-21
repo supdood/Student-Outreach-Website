@@ -58,7 +58,7 @@
        <?php print $surveyHTML?><br> 
     </p>
     
-    
+    <input type="submit" name="submit" value="Submit Survey" style="text-align:center"/>
 
 </div>
 
