@@ -1,3 +1,9 @@
 a {
     padding: 10px;
 }
+#login_form {
+	text-align: center;
+	display: table;
+	margin: auto;
+	padding: 100px 0px 0px 0px;
+}
