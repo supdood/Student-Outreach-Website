@@ -85,7 +85,7 @@ if (isset($_POST['addEvent']))
     <div class="form-group">
     
         Event Title:<input type="text" maxlength="50" name="title"><br/>
-        Date mm/dd/yyyy:  
+        Date:  
         <input type="text"  maxlength="2" name="month" value="mm" style="width:50px">/
         <input type="text"  maxlength="2" name="day" value="dd" style="width:50px">/
         <input type="text"  maxlength="4" name="year" value="yyyy" style="width:60px">
