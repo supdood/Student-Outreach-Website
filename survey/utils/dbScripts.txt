@@ -1,0 +1,86 @@
+Create Or Replace view VW_ALL_POSTS As
+Select r.ID, p.ID as PostID, UserName, FirstName, LastName, Gender, State, BirthYear, Category, Title, Description, PostDate, ExpireAfter
+From REGISTRATION as r, POST as p
+Where r.ID = p.UserID;
+
+Drop procedure if exists SP_INSERT_USER;
+Create Procedure SP_INSERT_USER(IN uname VARCHAR(50), IN pwd VARCHAR(60), IN salt CHAR(21), IN fn VARCHAR(50), IN ln VARCHAR(50), IN gender VARCHAR(5), IN state VARCHAR(20), IN byear CHAR(4))
+insert into REGISTRATION values (null, uname, pwd, salt, fn, ln, gender, state, byear);
+
+Drop procedure if exists K12_INSERT_SURVEY;
+Create Procedure K12_INSERT_SURVEY(IN surveyType INT(5), IN surveyID INT(15), IN questionID INT(15), IN answerID INT(15));
+insert into K12_SURVEY_ANSWERS values (null, surveyType, surveyID, questionID, answerID);
+
+
+Drop procedure if exists SP_COUNT_USER;
+Create Procedure SP_COUNT_USER(IN uname VARCHAR(50), IN pwd VARCHAR(60), OUT count INT)
+Select count(*) into count from REGISTRATION where username = uname and password = pwd;
+
+
+Drop procedure if exists SP_FIND_USER_ID;
+Create Procedure SP_FIND_USER_ID(IN uname VARCHAR(50), IN pwd VARCHAR(60), OUT UID INT)
+Select ID into UID from REGISTRATION where username = uname and password = pwd;
+
+Create Or Replace view VW_ALL_POSTS_WITH_PIC As
+Select r.ID as UserID, UserName, FirstName, LastName, Gender, State, BirthYear, PostID, Category, Title, Description, PostDate, ExpireAfter, l.ID as PicID, PicLink
+From REGISTRATION as r, POST as p, POST_PIC as l
+Where r.ID = p.UserID and p.ID = l.PostID
+
+
+Drop procedure if exists SP_GET_POSTS_BY_EMAIL;
+Create Procedure SP_GET_POSTS_BY_EMAIL (IN uname VARCHAR(50)) 
+select Category, Title, Description, PostDate, PostID  from VW_ALL_POSTS where UserName = uname;
+
+
+-- The following demonstrates using sp to create large amount of sample data
+DELIMITER //
+
+Drop  procedure if exists SP_CREATE_SAMPLE_DATA;//
+CREATE PROCEDURE SP_CREATE_SAMPLE_DATA ()
+BEGIN
+ DECLARE v INT;
+ SET v = 0;
+ WHILE v < 40 DO
+ INSERT INTO REGISTRATION VALUES (null, concat('test', v, '@test.com'), '12345abcde', '', concat('Test First ', v), concat('Test Last ', v),  'Male', 'IN', 2015);
+ SET v = v + 1;
+ END WHILE;
+END; //
+
+call SP_CREATE_SAMPLE_DATA ()
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#submit").click(submitSurvey);
+    });
+
+    function submitSurvey()
+    {
+        var quesCount = <?php print $questionCount ?>;
+
+        var i = 0;
+        for(i=0; i < quesCount; i++)
+        {
+            var answerVal = 0;
+            var question = "question" + i;
+            var answerSelected = $(question + " input[type='radio']:checked");
+            <?php print "phpQuestionID " ?> = i;
+            if (answerSelected.length > 0)
+            {
+                answerVal = answerSelected.val();
+                <?php print(
+                        $sqlInsert = "INSERT INTO `nelson8_db`.`K12_SURVEY_ANSWERS` (`ID`, `SurveyTypeID`, `SurveyID`, `QuestionID`, `AnswerID`) 
+                        VALUES (NULL, '1', '1', '".i."', '".."');"
+                    )?>
+            }
+
+        }
+    }
+
+</script>

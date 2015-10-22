@@ -3,6 +3,9 @@ Survey Functions
 Functions intended to perform survey related operations -->
 <?php
 
+$questionCount = 0;
+
+
 // function ConnectToDatabase()
 // {
 // 	$conn = mysqli_connect("localhost", "nelson8", "nelson8") or die(mysql_error());
@@ -39,24 +42,28 @@ function PopulateQuestions($QuestionResult, $AnswerResult)
 		// if (i % 2 == 0) {ASC} else DESC on $AnswerArray
 		foreach($question as $q)
 		{
-			$tempQStr = "<p><label>".($i).")  ".$q."</label><br>";
+			$tempQStr = "<p name='question".$i."'><label class='question".$i."' id='".$i."'>".($i).")  ".$q."</label><br>";
 		}
 
 		// // populate answer radio button html
 		// $answerArrayLength = count($AnswerArray);
 
-		// increment question counter
-		$i = $i + 1;
+
 		// initialize answer counter
 		$j = 0;
 		foreach($AnswerArray as $ans)
 		{
-			$tempAStr =  $tempAStr . "<input type='radio' name='"."a".$j."'>"."&nbsp".$ans[0]."</input>&nbsp&nbsp&nbsp&nbsp";
+			$tempAStr =  $tempAStr . "<input type='radio' id=".$j." name='"."a".$i."' class='question".$i."'>"."&nbsp".$ans[0]."</input>&nbsp&nbsp&nbsp&nbsp";
 			$j = $j+1;
 		}
+		// increment radio group number
+		// increment question counter
+		$i = $i + 1;
+
 		$str = $str . $tempQStr . $tempAStr . "</p>";
 		// $str = $str . "<br>QuestionArrayLength" . $arrayLength . "<br>AnswerArray" . $answerArrayLength;
 	}
+	$questionCount = $i;
 	return $str;
 }
 

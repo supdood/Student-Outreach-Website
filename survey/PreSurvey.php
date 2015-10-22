@@ -58,7 +58,7 @@
        <?php print $surveyHTML?><br> 
     </p>
     
-    
+    <button type="submit" name="submit">Submit Survey</button>
 
 </div>
 

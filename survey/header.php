@@ -22,7 +22,7 @@
     <link href="https://assets.iu.edu/brand/2.x/brand.css" media="screen" rel="stylesheet" type="text/css">
     <link href="https://assets.iu.edu/search/2.x/search.css" media="screen" rel="stylesheet" type="text/css">
     <link href="http://www.iupui.edu/_assets/css/site.css" media="screen" rel="stylesheet" type="text/css">
-    <link href="css/style.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="../css/style.css" media="screen" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -73,8 +73,8 @@
     <nav class="main hide-for-medium-down show-for-large-up" id="nav-main" role="navigation"><ul class="row pad">
                 <li class="show-on-sticky trident"><a href="http://www.iupui.edu/index.html">Home</a></li>
                 <a href="index.php">Home</a>
-                <a href="login.php" class="pull-right">Log In</a>
-                <a href="signup.php" class="pull-right">Sign Up</a>
+                <a href="../login.php" class="pull-right">Log In</a>
+                <a href="../signup.php" class="pull-right">Sign Up</a>
         </span>
         </ul>
     </nav>

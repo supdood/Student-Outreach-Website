@@ -36,8 +36,9 @@
     // populate questions with utility function
     $surveyHTML = PopulateQuestions($questionResult, $answerResult);
 
-
 ?>
+
+
 
 
     
@@ -60,7 +61,7 @@
        <?php print $surveyHTML?><br> 
     </p>
     
-    
+    <button type="submit" name="submit">Submit Survey</button>
 
 </div>
 
@@ -72,3 +73,4 @@
 <?php
 include "footer.php";
 ?>
+
