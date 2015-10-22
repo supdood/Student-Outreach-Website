@@ -41,11 +41,8 @@ if (isset($_POST['addEvent']))
 
     $code = randomCodeGenerator(25);
     $sql = "insert into EVENTS values('".$t."', '".$date."', '0', '".$code."')";  
-    print $sql;
     $result= mysqli_query($con, $sql) or die(mysqli_error($con)); //a non-select statement query will return a result indicating if the 
     if ($result) $msg = "<b>Your information is entered into the database. </b>";
-    
-    echo $msg;
     
 }
 
@@ -76,6 +73,10 @@ if (isset($_POST['addEvent']))
 
     
 <div class="row">
+    
+    <?php
+    echo $msg;
+    ?>
 
 
     <h3>Add Event to Calendar</h3>

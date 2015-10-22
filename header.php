@@ -80,6 +80,7 @@
                 <a href="index.php">Home</a>
                 <?php if (isset($_SESSION['username'])) {
 			echo '<a href="logout.php" class="pull-right">Log Out</a>';
+            echo '<a href="account.php" class="pull-right">Account</a>';
             echo '<a href="addEvent.php" class="pull-right">Add Event</a>';
 		} else {
 			echo '<a href="login.php" class="pull-right">Log In</a>';
