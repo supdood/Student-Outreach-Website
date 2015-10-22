@@ -90,7 +90,7 @@ if (isset($_SESSION['username'])) {
                            Header ("Location:account.php") ;
                         else Header ("Location:activation.php") ;
                     }
-				    else $msg = "The information entered does not match with the records in our database.";
+				    else $msg = "<br/><b>The information entered does not match with the records in our database.</b>";
                     
                     
                     
@@ -98,7 +98,9 @@ if (isset($_SESSION['username'])) {
             }
 		?>
 
-<?php print $msg ?>
+    <div class="row">
+        <?php print $msg ?>
+    </div>
 
 
 
