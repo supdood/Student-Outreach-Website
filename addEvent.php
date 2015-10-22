@@ -3,6 +3,11 @@
 include "header.php";
 require_once "inc/dbconnect.php";
 require_once "inc/util.php";
+
+if (!isset($_SESSION['username'])) {
+    header ('Location: login.php');
+}
+
 ?>
 
 
