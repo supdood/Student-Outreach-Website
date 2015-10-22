@@ -82,6 +82,7 @@
 			echo '<a href="logout.php" class="pull-right">Log Out</a>';
             echo '<a href="account.php" class="pull-right">Account</a>';
             echo '<a href="addEvent.php" class="pull-right">Add Event</a>';
+            echo '<a href="survey/SurveyTemplate.php" class="pull-right">Survey</a>';
 		} else {
 			echo '<a href="login.php" class="pull-right">Log In</a>';
  			echo '<a href="signup.php" class="pull-right">Sign Up</a>';
