@@ -1,9 +1,9 @@
 <?php session_start();
       //Redirects to login if the current page is not the home, login, or signup page.
-      if (!isset($_SESSION['username']) && basename($_SERVER['SCRIPT_NAME']) != "login.php"
+      /*if (!isset($_SESSION['username']) && basename($_SERVER['SCRIPT_NAME']) != "login.php"
 		&& basename($_SERVER['SCRIPT_NAME']) != "index.php" && basename($_SERVER['SCRIPT_NAME']) != "signup.php") {
 		Header("Location: login.php");
-      }
+      }*/
 ?>
 
 <!DOCTYPE html>
