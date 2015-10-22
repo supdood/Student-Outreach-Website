@@ -53,12 +53,13 @@
 
 
     <h3>Entry Survey</h3>
-    
-    <p>
-       <?php print $surveyHTML?><br> 
-    </p>
-    
-    <button type="submit" name="submit">Submit Survey</button>
+    <form action="SurveyConfirmation.php" method="post">
+        <p>
+           <?php print $surveyHTML?><br> 
+        </p>
+        
+        <button type="submit" name="submit">Submit Survey</button>
+    </form>
 
 </div>
 
