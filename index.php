@@ -19,7 +19,7 @@ include "header.php";
 <div class="row">
 
 
-    <h3>Example Title</h3>
+    <!-- <h3>Example Title</h3> -->
     
     <p>
 	<?php
