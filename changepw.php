@@ -17,13 +17,22 @@ $opw = "";
 $npw = "";
 $msg = "";
 $passFields = true;
+$pwMatch = false;
 
 if (isset($_POST['enter'])) {
-                        
+                
+    if ($_POST['newpw'] == $_POST['confirmpw']) {
+        $pwMatch = true;
+    }
+    else 
+        $passFields = false;
+    
+    
     if (!filter_input(INPUT_POST, 'email',FILTER_VALIDATE_EMAIL)) {
-        $msg = '<b>Please enter a valid email.</b>';
+        $msg = $msg . '<b>Please enter a valid email.</b><br/><br/>';
         $passFields = false;
     }
+    
     else {
         $em = trim($_POST['email']);
     }
@@ -35,10 +44,12 @@ if (isset($_POST['enter'])) {
         $npw = trim($_POST['newpw']);
     }
     if (!pwdValidate($npw)) {
-        $msg = $msg . "<br /><b>Your new Password must be at least 10 characters in length and contain
-        both numbers and digits.</b>";
+        $msg = $msg . "<b>Your new Password must be at least 10 characters in length and contain
+        both numbers and digits.</b><br /><br/>";
         $passFields = false;
     }
+    if ($pwMatch == false)
+        $msg = $msg . '<b>Please enter matching passwords.</b><br/><br/>';
                         
     if ($passFields == true) {
                         
@@ -84,7 +95,9 @@ if (isset($_POST['enter'])) {
                     
         Old Password: <input type="password" maxlength = "50" value="<?php print $opw; ?>" name="oldpw" id="oldpw"   /> <br />   
                     
-        New Password: <input type="password" maxlength = "50" value="<?php print $npw; ?>" name="newpw" id="newpw"   />
+        New Password: <input type="password" maxlength = "50" value="<?php print $npw; ?>" name="newpw" id="newpw"   /> <br />
+        
+        Confirm New Password: <input type="password" maxlength = "50" value="" name="confirmpw" id="confirmpw"   />
                 
         <input name="enter" class="btn" type="submit" value="Submit" />
 			
