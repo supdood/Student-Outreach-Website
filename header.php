@@ -61,8 +61,8 @@
         
                     <div id="toggles">
     <div class="row pad">
-        <a class="button right-off-canvas-toggle hide-for-large-up" href="#">Menu</a>
-        <a class="button search-toggle" href="http://www.iupui.edu/search/" title="Search">Search</a>
+        <!-- <a class="button right-off-canvas-toggle hide-for-large-up" href="#">Menu</a>
+        <a class="button search-toggle" href="http://www.iupui.edu/search/" title="Search">Search</a> -->
     </div>
 </div>
 

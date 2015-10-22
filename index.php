@@ -25,9 +25,9 @@ include "header.php";
 	<?php
 		if (isset($_SESSION['uid'])) {
 			echo "Thank you, ".$_SESSION['uid'].", for registering!"." A confirmation has been sent to the provided email.";
-		} else {
+		} /*else {
 			echo "This is just an example of how text is formatted on the page.";
-		}
+		}*/
    	?>
     </p>
     
