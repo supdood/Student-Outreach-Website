@@ -80,11 +80,12 @@
                 <a href="index.php">Home</a>
                 <?php if (isset($_SESSION['username'])) {
 			echo '<a href="logout.php" class="pull-right">Log Out</a>';
+            echo '<a href="addEvent.php" class="pull-right">Add Event</a>';
 		} else {
 			echo '<a href="login.php" class="pull-right">Log In</a>';
  			echo '<a href="signup.php" class="pull-right">Sign Up</a>';
 		} ?>
-        </span>
+                <a href="calendar.php" class="pull-right">Event Calendar</a>
         </ul>
     </nav>
         </div>
