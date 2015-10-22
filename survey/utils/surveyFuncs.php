@@ -42,7 +42,7 @@ function PopulateQuestions($QuestionResult, $AnswerResult)
 		// if (i % 2 == 0) {ASC} else DESC on $AnswerArray
 		foreach($question as $q)
 		{
-			$tempQStr = "<p name='question".$i."'><label class='question".$i."' id='".$i."'>".($i).")  ".$q."</label><br>";
+			$tempQStr = "<p><label name='q".$i."' class='question".$i."' value='".$i."'>".($i).")  ".$q."</label><br>";
 		}
 
 		// // populate answer radio button html
@@ -53,7 +53,7 @@ function PopulateQuestions($QuestionResult, $AnswerResult)
 		$j = 0;
 		foreach($AnswerArray as $ans)
 		{
-			$tempAStr =  $tempAStr . "<input type='radio' id=".$j." name='"."a".$i."' class='question".$i."'>"."&nbsp".$ans[0]."</input>&nbsp&nbsp&nbsp&nbsp";
+			$tempAStr =  $tempAStr . "<input type='radio' value=".$j." name='"."a".$i."' class='question".$i."'>"."&nbsp".$ans[0]."</input>&nbsp&nbsp&nbsp&nbsp";
 			$j = $j+1;
 		}
 		// increment radio group number
