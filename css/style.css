@@ -1,6 +1,7 @@
-a {
+a.pull-right {
     padding: 10px;
 }
+
 #login_form {
 	text-align: center;
 	display: table;
