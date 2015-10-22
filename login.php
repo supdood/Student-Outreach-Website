@@ -4,10 +4,6 @@
 		$_SESSION['count'] = 3;
 	}
 	if (isset($_POST['sbmt'])) {
-		/*$db = new mysqli('localhost', 'whitdac', 'whitdac', 'whitdac_db');
-		$q = "SELECT password FROM * WHERE username='".$_POST['uname']."'";
-		$result = $db->query($q)->fetch_row();
-		*/
 		if ($result[0] == $_POST['password']) {
 			$_SESSION['username'] = $_POST['uname'];
 			Header("Location: index.php");

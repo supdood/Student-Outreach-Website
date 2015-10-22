@@ -1,30 +1,17 @@
 <?php
 	include "header.php";
-
+	function rand_str($seed) {
+    		return hash("sha256", $seed);
+	}
+	$link = $_SERVER['HTTP_HOST'].dirname($_SERVER['REQUEST_URI']);
 	if (isset($_POST['sbmt'])) {
-		while (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
+		if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 			echo "Please enter a valid email.";
-		}
-		/*
-		try {
-		$link = "";
-		$_SESSION['uid'] = $_POST['uid'];
-		$db = new mysqli('localhost', 'whitdac', 'whitdac', 'whitdac_db');
-		$q = "INSERT INTO whitdac_db VALUES ('$_POST['firstName']', '$_POST['lastName']',
-		     '$_POST['school']', '$_POST['email']', '$_POST['edulvl']', '$_POST['background']', 
-		     '$_POST['uid']')"; 
-		$db->query($q) or die($db->error);
-		$db->close();
-		*/
+		} else {
 		mail($_POST['email'], "Confirmation", "Thank you for registering with the Student Outreach program! Please complete
-			 your registraiton and submit the following confirmation code at: ".$link." code: ".rand(10000000, 99999999));
+			 your registraiton and submit the following confirmation code at: ".$link." code: ".rand_str($_POST['email']));
 		Header("Location: index.php");
-		/*
-		} catch (PDOException $e) {
-			print("Database could not connect".$e->getMessage()."<br/>");
 		}
-		*/
-	}    
 ?>
 	<form id="login_form" action="signup.php" method="post">
 		<div>
