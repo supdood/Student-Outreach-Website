@@ -1,9 +1,4 @@
 <?php session_start();
-      //Redirects to login if the current page is not the home, login, or signup page.
-      /*if (!isset($_SESSION['username']) && basename($_SERVER['SCRIPT_NAME']) != "login.php"
-		&& basename($_SERVER['SCRIPT_NAME']) != "index.php" && basename($_SERVER['SCRIPT_NAME']) != "signup.php") {
-		Header("Location: login.php");
-      }*/
 ?>
 
 <!DOCTYPE html>
@@ -59,12 +54,14 @@
             </div>
         </div>
         
+		<!--
                     <div id="toggles">
     <div class="row pad">
-        <!-- <a class="button right-off-canvas-toggle hide-for-large-up" href="#">Menu</a>
-        <a class="button search-toggle" href="http://www.iupui.edu/search/" title="Search">Search</a> -->
+        <a class="button right-off-canvas-toggle hide-for-large-up" href="#">Menu</a>
+        <a class="button search-toggle" href="http://www.iupui.edu/search/" title="Search">Search</a>
     </div>
 </div>
+-->
 
 
         <div id="search" class="search-box" role="search"></div>
@@ -72,25 +69,39 @@
         <!-- Including the IUPUI structure for navigation links in the header -->
     
         <div class="inner-wrap">
-    
-    
-        	
-    <nav class="main hide-for-medium-down show-for-large-up" id="nav-main" role="navigation"><ul class="row pad">
-                <li class="show-on-sticky trident"><a href="http://www.iupui.edu/index.html">Home</a></li>
-                <a href="index.php">Home</a>
+	
+	   <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="index.php">Home</a></li>
                 <?php if (isset($_SESSION['username'])) {
-			echo '<a href="logout.php" class="pull-right">Log Out</a>';
-            echo '<a href="account.php" class="pull-right">Account</a>';
-            echo '<a href="SurveyTemplate.php" class="pull-right">Survey</a>';
-            echo '<a href="addEvent.php" class="pull-right">Add Event</a>';
+			echo '<li><a href="logout.php" class="">Log Out</a></li>';
+            echo '<li><a href="account.php" class="">Account</a></li>';
+            echo '<li><a href="SurveyTemplate.php" class="">Survey</a></li>';
+            echo '<li><a href="addEvent.php" class="">Add Event</a></li>';
 		} else {
-			echo '<a href="login.php" class="pull-right">Log In</a>';
- 			echo '<a href="signup.php" class="pull-right">Sign Up</a>';
+			echo '<li><a href="login.php" class="">Log In</a></li>';
+ 			echo '<li><a href="signup.php" class="">Sign Up</a></li>';
 		} ?>
-                <a href="calendar.php" class="pull-right">Event Calendar</a>
-        </ul>
-    </nav>
+                <li><a href="calendar.php" class="">Event Calendar</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
         </div>
+      </nav>
+    
+    
+        
     </div>
     
     <!------------------------------------------------------------------------------------------
