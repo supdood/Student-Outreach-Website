@@ -38,3 +38,23 @@ a.pull-right {
     width: 65px;
     
 }
+
+#updateName, #updateSchool, #updateEdu{
+    
+    font-size: 75%;
+    color:Blue;
+    font-weight: bold;
+    
+}
+
+#fnField, #lnField {
+    
+    width: 25%;
+    
+}
+
+#sField, #eField {
+    
+    width: 40%;
+    
+}
