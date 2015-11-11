@@ -131,15 +131,13 @@ if (isset($_POST['submit']))
         $fields = false;
     }
     else if ($fields == true) {
-                    
-        print "pass";            
+                            
         //This is used to prevent sql injections.
         $em = mysqli_real_escape_string($con, $em);
         $pw = mysqli_real_escape_string($con, $pw);
                     
-        //first check if the username already exists in the database
-        $sql = "select count(*) as c from REGISTRATION where UserName = '" . $em. "'";
-        print $sql;
+        //first check if the email already exists in the database
+        $sql = "select count(*) as c from K12_TEACHER where Email = '" . $em. "'";
                     
                     
         $result = mysqli_query($con, $sql) or die("Error in the consult.." . mysqli_error($con)); //send the query to the database or quit if cannot connect
@@ -147,14 +145,16 @@ if (isset($_POST['submit']))
         $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
         $count = $field->c;
         if ($count != 0)
-        {	Header ("Location:login.php") ;
-         //print "count is ".	$count;					
+        {	
+            Header ("Location:login.php") ;				
         }
-        else //the username doesn't exist yet
+        else //the email doesn't exist yet
         {	
             $code = randomCodeGenerator(50);
-            $sql = "insert into REGISTRATION values('".$fn."', '".$em."', '".$pw."', '".$code."', 'no', '', '".$fn."', '".$ln."', '', '', '')";  
-            print $sql;
+            echo $pw . "<br/>";
+            
+            $sql = "insert into K12_TEACHER values('', '".$em."', '".$fn."', '".$ln."', '".$s."', '".$e."', '".$b."', '".$pw."', 'no', '".$code."', '3')";  
+            print $sql . "<br/><br/>";
             $result= mysqli_query($con, $sql) or die(mysqli_error($con)); //a non-select statement query will return a result indicating if the 
                         
             if ($result) $msg = "<b>Your information is entered into the database. </b>";

@@ -23,6 +23,9 @@
     <link href="https://assets.iu.edu/search/2.x/search.css" media="screen" rel="stylesheet" type="text/css">
     <link href="http://www.iupui.edu/_assets/css/site.css" media="screen" rel="stylesheet" type="text/css">
     <link href="css/style.css" media="screen" rel="stylesheet" type="text/css">
+    
+    <!-- Include jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
 </head>
 
@@ -82,17 +85,17 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="index.php">Home</a></li>
-                <?php if (isset($_SESSION['username'])) {
-			echo '<li><a href="logout.php" class="">Log Out</a></li>';
-            echo '<li><a href="account.php" class="">Account</a></li>';
-            echo '<li><a href="SurveyTemplate.php" class="">Survey</a></li>';
-            echo '<li><a href="addEvent.php" class="">Add Event</a></li>';
-		} else {
-			echo '<li><a href="login.php" class="">Log In</a></li>';
- 			echo '<li><a href="signup.php" class="">Sign Up</a></li>';
-		} ?>
+                <li><a href="index.php">Home</a></li>
                 <li><a href="calendar.php" class="">Event Calendar</a></li>
+                <?php if (isset($_SESSION['email'])) {
+            echo '<li><a href="addEvent.php" class="">Add Event</a></li>';
+            echo '<li><a href="SurveyTemplate.php" class="">Survey</a></li>';
+            echo '<li><a href="account.php" class="">Account</a></li>';
+            echo '<li><a href="logout.php" class="">Log Out</a></li>';
+		} else {
+ 			echo '<li><a href="signup.php" class="">Sign Up</a></li>';
+            echo '<li><a href="login.php" class="">Log In</a></li>';
+		} ?>
                 </ul>
               </li>
             </ul>
@@ -103,9 +106,3 @@
     
         
     </div>
-    
-    <!------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------
-------------------------------------End of the IUPUI Header-------------------------------------
-------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------->

@@ -42,14 +42,14 @@ require_once "inc/dbconnect.php";
                         $code = mysqli_real_escape_string($con, $code);
                         $em = mysqli_real_escape_string($con, $em);
 
-					   $sql = "select count(*) as c from REGISTRATION where UserName = '" . $em. "' and RegistrationCode = '".$code. "'";
+					   $sql = "select count(*) as c from K12_TEACHER where Email = '" . $em. "' and RegistrationCode = '".$code. "'";
 					   $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
 					   $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
 					   $count = $field->c;
 					
 					   if ($count > 0) {
 						  
-                           $sql = "UPDATE REGISTRATION SET Authenticated = 'yes' WHERE UserName = '" .$em. "' and RegistrationCode = '".$code. "'";
+                           $sql = "UPDATE K12_TEACHER SET Authenticated = 'yes' WHERE Email = '" .$em. "' and RegistrationCode = '".$code. "'";
                            $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
                            
                            Header ("Location:account.php") ;

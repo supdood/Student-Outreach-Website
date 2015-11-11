@@ -21,6 +21,7 @@
         
 		$('#calendar').fullCalendar({
 			defaultDate: this.date,
+            displayEventTime: true,
 			editable: false,
 			eventLimit: true, // allow "more" link when too many events
 			events: [
@@ -29,7 +30,7 @@
                 <?php
                 
                 require_once "inc/dbconnect.php";
-                $sql = "select * From EVENTS";
+                $sql = "select * From K12_EVENTS";
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
    
 

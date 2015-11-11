@@ -12,7 +12,7 @@ include "header.php";
     <div class="container">
         <h1>Student Outreach</h1>
         <p>The IUPUI Student Outreach program is an initiative my IUPUI to get more young students interested in computers, science, and mathematics.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        <!--<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>-->
     </div>
 </div>
 

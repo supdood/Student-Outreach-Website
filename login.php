@@ -5,8 +5,8 @@ require_once "inc/dbconnect.php";
 
 $msg = "";
 
-if (isset($_SESSION['username'])) {
-    unset($_SESSION['username']);
+if (isset($_SESSION['email'])) {
+    unset($_SESSION['email']);
     session_destroy();
     $msg = "You have been successfully logged out. <br />";
 }
@@ -73,9 +73,9 @@ if (isset($_SESSION['username'])) {
                     
                     $em = mysqli_real_escape_string($con, $em);
                     $pw = mysqli_real_escape_string($con, $pw);
-                    $_SESSION['username'] = $em;
+                    $_SESSION['email'] = $em;
 
-				    $sql = "select count(*) as c from REGISTRATION where UserName = '" . $em. "' and Password = '" .$pw. "'";
+				    $sql = "select count(*) as c from K12_TEACHER where Email = '" . $em. "' and Password = '" .$pw. "'";
 				    //print $sql. ' ' . $_SESSION['email'];
 				    $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
 				    $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
@@ -83,7 +83,7 @@ if (isset($_SESSION['username'])) {
 					
 				    if ($count > 0) {
 						  
-                        $sql = "select Authenticated From REGISTRATION WHERE UserName = '" .$em. "' and Password = '".$pw. "'";
+                        $sql = "select Authenticated From K12_TEACHER WHERE Email = '" .$em. "' and Password = '".$pw. "'";
                         $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
                         $activated = mysqli_fetch_array($result);
                         if ($activated[0] == 'yes')
@@ -108,7 +108,7 @@ if (isset($_SESSION['username'])) {
 
 	<form id="login_form" action="login.php" method="post">
 		<div>
-			<label for="name">Username</label>
+			<label for="name">Email</label>
 			<input type="text" name="email"/>
 		</div>
 		<div>

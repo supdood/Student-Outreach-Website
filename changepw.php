@@ -4,7 +4,7 @@ include "header.php";
 require_once "inc/util.php";
 require_once "inc/dbconnect.php";
 
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['email'])) {
     header ('Location: login.php');
 }
 
@@ -59,14 +59,14 @@ if (isset($_POST['enter'])) {
         $opw = mysqli_real_escape_string($con, $opw);
         $npw = mysqli_real_escape_string($con, $npw);
 
-        $sql = "select Password from REGISTRATION where UserName = '" . $em. "' and Password = '".$opw. "'";
+        $sql = "select Password from K12_TEACHER where Email = '" . $em. "' and Password = '".$opw. "'";
         //print $sql. ' ' . $_SESSION['email'];
         $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
         $field = mysqli_fetch_array($result); //the query results are objects, in this case, one object
 					
         if ($opw == $field[0]) {
 						  
-            $sql = "UPDATE REGISTRATION SET Password = '" .$npw. "' WHERE UserName = '" .$em. "' and Password = '".$opw. "'";
+            $sql = "UPDATE K12_TEACHER SET Password = '" .$npw. "' WHERE Email = '" .$em. "' and Password = '".$opw. "'";
             $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
             $msg = "Your password has been successfully changed. <br/><br/>";
             //Header ("Location:account.php") ;

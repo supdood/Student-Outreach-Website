@@ -14,3 +14,27 @@ a.pull-right {
     width: inherit;
     
 }
+
+#formMonths{
+    
+    width: 120px;
+    
+}
+
+#formDays{
+    
+    width: 55px;
+    
+}
+
+#formYears{
+    
+    width: 90px;
+    
+}
+
+.formTime{
+    
+    width: 65px;
+    
+}

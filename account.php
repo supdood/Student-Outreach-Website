@@ -3,11 +3,11 @@
 include "header.php";
 require_once "inc/dbconnect.php";
 
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['email'])) {
     header ('Location: login.php');
 }
 else {
-    $sql = "select Authenticated From REGISTRATION WHERE UserName = '" .$_SESSION['username']."'";
+    $sql = "select Authenticated From K12_TEACHER WHERE Email = '" .$_SESSION['email']."'";
     $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
     $activated = mysqli_fetch_array($result);
     if ($activated[0] == 'no')
@@ -24,8 +24,7 @@ $msg = "";
 
 //Greet the user
 
-$sql = "select FirstName, LastName from REGISTRATION where UserName = '" .$_SESSION['username']. "'";
-//$sql = "select FirstName, LastName from REGISTRATION where UserName = 'ejapohfepah@gmail.com'";
+$sql = "select FirstName, LastName from K12_TEACHER where Email = '" .$_SESSION['email']. "'";
 $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
 $field = mysqli_fetch_array($result); //the query results are objects, in this case, one object
 $msg = "Welcome " . $field[0] . " " . $field[1] . "!<br/><br/>";
