@@ -72,6 +72,24 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                 <li><a href='#promote'>Promote Admins</a></li>
             </ul>
             <div class='tab-content'>
+            
+            <div id='tDataTab' class='tab-pane fade in active'>
+                    <br/>
+                    User Email:<input type='text' id='teacherData'>
+                    <button onclick='getData(teacherData.value)'>Search</button>
+                    
+                    <span id='table'>
+                    
+                    <table id='data' class='display' cellspacing='0' width='100%'> 
+                    <thead><tr>
+                        <th>Question Number</th><th>Question</th><th>Answer</th></tr></thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    </span>
+            </div>
+            
+            
             <div id='promote' class='tab-pane fade'>
             
             <br/>
@@ -134,14 +152,14 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                                 var data = JSON.parse(xhttp.responseText); 
                                 //If no user was found with the given last name, it gives an error message.
                                 if (data.length == 0) {
-                                    document.getElementById('msg').innerHTML = '<b>No user with the last name "' + str + '" found.</b><br/><br/>';
+                                    document.getElementById('msg').innerHTML = '<b>No user with the last name ' + str + ' found.</b><br/><br/>';
                                     
                                     //clear the table 
                                     $('#data').DataTable().clear().draw();
                                 }
                                 else {
                                     
-                                document.getElementById('msg').innerHTML = "";    
+                                document.getElementById('msg').innerHTML = '';    
                                     
                                 //clear the table before new rows are added
                                 $('#data').DataTable().clear().draw();
@@ -152,11 +170,7 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                                             $('#data').DataTable().row.add([
                                                 data[i][0],
                                                 data[i][1],
-                                                data[i][2],
-                                                data[i][3],
-                                                data[i][4],
-                                                data[i][5],
-                                                data[i][6]
+                                                data[i][2]
                                             ]).draw(false);
                                        }
                                     });
@@ -164,7 +178,7 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                                     
                             }
                         }
-                        xhttp.open('GET', 'dataTable.php?q='+str, true);
+                        xhttp.open('GET', 'ajaxPHP/dataTable.php?q='+str, true);
                         xhttp.send();   
                     }
                     
@@ -178,22 +192,6 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
             </script>
             
             </div>
-                <div id='tDataTab' class='tab-pane fade in active'>
-                    <br/>
-                    User Email:<input type='text' id='teacherData'>
-                    <span id='table'>
-                    
-                    <table id='data' class='display' cellspacing='0' width='100%'> 
-                    <thead><tr>
-                        <th>First Name</th><th>Last Name</th><th>Email</th><th>Gender</th><th>State</th><th>Birth Year</th><th>User ID</th>
-                    </tr></thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                    
-        
-                </span>
-                </div>
             </div>";
             echo ($promoteUI);
             
