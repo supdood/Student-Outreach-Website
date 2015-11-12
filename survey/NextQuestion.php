@@ -36,7 +36,7 @@
     }
     if(isset($_POST["btnStartPostSurvey"]))
     {
-
+        // intiialize the notifications variable
         $notifications = "";
 
         // identifying survey type
@@ -58,6 +58,24 @@
 
             $notifications .= "<br>" . $surveyID;   
         }
+    }
+
+    if(isset($_POST["btnExistingSurvey"]))
+    {
+        // intiialize the notifications variable
+        $notifications = "";
+
+        // clearing surveyType session variable
+        // since the survey already exists, we can get the surveyType if we need it
+        $_SESSION["surveyType"] = "";   
+        // create new survey in database
+        // $insertSql = "K12_SURVEY_INSERTNEWSURVEY('".$_SESSION["teacherID"]."', '".$_SESSION["classID"]."', '".$_SESSION["lastQuestionAnswered"]."', 'no', 'post'";
+        $existingSql = "Select lastQuestionAnswered FROM K12_SURVEY WHERE SurveyID = '".$_SESSION["selected"]."'";
+        $existingResult = mysqli_query($conn, $existingSql);
+
+        $fields = mysqli_fetch_array($existingResult);
+        // populate lastQuestionAnswered session variable
+        $_SESSION["lastQuestionAnswered"] = $fields[0];
     }
 
 
@@ -159,7 +177,7 @@
         
         <button type="submit" name="enter">Submit Survey</button>
     </form>
-    <span style="text-align:center">  <?php print $notifications   ?>   </span>
+    <span style="text-align:center">  <?php if($notifications != "") print $notifications   ?>   </span>
 
 </div>
 
