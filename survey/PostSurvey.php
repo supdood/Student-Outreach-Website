@@ -16,13 +16,15 @@
     $errorMsg = "";
     
     // get questions from database
-    $qSql = "SELECT Question FROM K12_POSTSURVEY_QUESTIONS";
+    //$qSql = "SELECT Question FROM K12_POSTSURVEY_QUESTIONS";
+    $qSql = "call K12_POSTSURVEY_QUESTIONS_GETQUESTIONS()";
     $questionResult = mysqli_query($conn, $qSql) or die(mysql_error());
     // $questionArray = mysqli_fetch_array($questionResult);
 
     
     // get answers from database
-    $aSql = "SELECT Description FROM K12_LICHERT_ANSWERS ORDER BY K12_LICHERT_ANSWERS.ID ASC";
+    //$aSql = "SELECT Description FROM K12_LICHERT_ANSWERS ORDER BY K12_LICHERT_ANSWERS.ID ASC";
+    $aSql = "call K12_LICHERT_ANSWERS_GETANSWERS()";
     $answerResult = mysqli_query($conn, $aSql) or die(mysql_error());
     // $answerArray = mysqli_fetch_array($answerResult); 
 

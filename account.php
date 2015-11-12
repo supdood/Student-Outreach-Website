@@ -7,7 +7,11 @@ if (!isset($_SESSION['email'])) {
     header ('Location: login.php');
 }
 else {
-    $sql = "select Authenticated From K12_TEACHER WHERE Email = '" .$_SESSION['email']."'";
+
+   $sql = "select Authenticated From K12_TEACHER WHERE Email = '" .$_SESSION['email']."'";
+
+    // $sql = "call K12_TEACHER_AUTHENTICATED($_SESSION['username'])"; // if the embedded session variable creates
+                                                                    // an error, may have to concatenate instead
     $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
     $activated = mysqli_fetch_array($result);
     if ($activated[0] == 'no')
@@ -28,6 +32,9 @@ $eduLevel="";
 //Greet the user
 
 $sql = "select FirstName, LastName, School, Education, CSBackground from K12_TEACHER where Email = '" .$_SESSION['email']. "'";
+//$sql = "call K12_TEACHER_GETFULLNAME(".$_SESSION['username'].")";  // if the embedded session variable creates
+                                                           // an error, may have to concatenate instead
+//$sql = "select FirstName, LastName from REGISTRATION where UserName = 'ejapohfepah@gmail.com'";
 $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
 $field = mysqli_fetch_array($result); //the query results are objects, in this case, one object
 $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<br/><br/>";

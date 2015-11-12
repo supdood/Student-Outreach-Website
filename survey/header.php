@@ -11,10 +11,10 @@
 <html lang="en">
 <head>
 
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-	<title>IUPUI Student Outreach</title>
-	
+    <title>IUPUI Student Outreach</title>
+    
     <!-- Bootstrap -->
     <link href="../css/bootstrap.css" rel="stylesheet">
     
@@ -23,6 +23,9 @@
     <link href="https://assets.iu.edu/search/2.x/search.css" media="screen" rel="stylesheet" type="text/css">
     <link href="http://www.iupui.edu/_assets/css/site.css" media="screen" rel="stylesheet" type="text/css">
     <link href="../css/style.css" media="screen" rel="stylesheet" type="text/css">
+    
+    <!-- Include jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
 </head>
 
@@ -54,12 +57,14 @@
             </div>
         </div>
         
-        <div id="toggles">
-            <div class="row pad">
-                <a class="button right-off-canvas-toggle hide-for-large-up" href="#">Menu</a>
-                <a class="button search-toggle" href="http://www.iupui.edu/search/" title="Search">Search</a>
-            </div>
-        </div>
+        <!--
+                    <div id="toggles">
+    <div class="row pad">
+        <a class="button right-off-canvas-toggle hide-for-large-up" href="#">Menu</a>
+        <a class="button search-toggle" href="http://www.iupui.edu/search/" title="Search">Search</a>
+    </div>
+</div>
+-->
 
 
         <div id="search" class="search-box" role="search"></div>
@@ -68,21 +73,39 @@
     
         <div class="inner-wrap">
     
-    
-        	
-    <nav class="main hide-for-medium-down show-for-large-up" id="nav-main" role="navigation"><ul class="row pad">
-                <li class="show-on-sticky trident"><a href="http://www.iupui.edu/index.html">Home</a></li>
-                <a href="index.php">Home</a>
-                <a href="../login.php" class="pull-right">Log In</a>
-                <a href="../signup.php" class="pull-right">Sign Up</a>
-        </span>
-        </ul>
-    </nav>
+       <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="index.php">Home</a></li>
+                <li><a href="calendar.php" class="">Event Calendar</a></li>
+                <?php if (isset($_SESSION['email'])) {
+            echo '<li><a href="addEvent.php" class="">Add Event</a></li>';
+            echo '<li><a href="SurveyTemplate.php" class="">Survey</a></li>';
+            echo '<li><a href="account.php" class="">Account</a></li>';
+            echo '<li><a href="logout.php" class="">Log Out</a></li>';
+        } else {
+            echo '<li><a href="signup.php" class="">Sign Up</a></li>';
+            echo '<li><a href="login.php" class="">Log In</a></li>';
+        } ?>
+                </ul>
+<!--               </li>
+            </ul> -->
+          </div><!--/.nav-collapse -->
         </div>
-    </div>
+      </nav>
     
-    <!------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------
-------------------------------------End of the IUPUI Header-------------------------------------
-------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------->
+    
+        
+    </div>
+
+
+    

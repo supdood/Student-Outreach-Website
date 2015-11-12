@@ -30,7 +30,9 @@
                 <?php
                 
                 require_once "inc/dbconnect.php";
+
                 $sql = "select * From K12_EVENTS";
+                //$sql = "call K12_EVENTS_GETEVENTS()";   // use stored procedure
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
    
 

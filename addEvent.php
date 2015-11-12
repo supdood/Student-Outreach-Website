@@ -91,7 +91,10 @@ if (isset($_POST['addEvent']))
 
 
     $code = randomCodeGenerator(25);
+
     $sql = "insert into K12_EVENTS values('".$t."', '".$date."', '".$endDate."', '0', '".$code."')";  
+    //$sql = "call K12_EVENTS_INSERTEVENT($t, $date, null, $_SESSION["ID"], $code)";   // will need the teacherID from database for this call, also may want to use an autoincrement value for the eventID rather than randomly generated code  
+
     $result= mysqli_query($con, $sql) or die(mysqli_error($con)); //a non-select statement query will return a result indicating if the 
     if ($result) $msg = "<b>Your information is entered into the database. </b>";
     

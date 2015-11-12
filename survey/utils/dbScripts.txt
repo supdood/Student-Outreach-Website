@@ -3,13 +3,88 @@ Select r.ID, p.ID as PostID, UserName, FirstName, LastName, Gender, State, Birth
 From REGISTRATION as r, POST as p
 Where r.ID = p.UserID;
 
-Drop procedure if exists SP_INSERT_USER;
-Create Procedure SP_INSERT_USER(IN uname VARCHAR(50), IN pwd VARCHAR(60), IN salt CHAR(21), IN fn VARCHAR(50), IN ln VARCHAR(50), IN gender VARCHAR(5), IN state VARCHAR(20), IN byear CHAR(4))
-insert into REGISTRATION values (null, uname, pwd, salt, fn, ln, gender, state, byear);
 
-Drop procedure if exists K12_INSERT_SURVEY;
-Create Procedure K12_INSERT_SURVEY(IN surveyType INT(5), IN surveyID INT(15), IN questionID INT(15), IN answerID INT(15));
+Drop procedure if exists K12_SURVEY_TEACHER_INCOMPLETESURVEY;
+Create Procedure K12_SURVEY_TEACHER_INCOMPLETESURVEY(IN email VARCHAR(50))
+Select s.ClassID
+From K12_SURVEY as s, K12_TEACHER as t
+Where s.ID = t.ID AND s.Completed ="no" AND t.Email = email;
+
+Drop procedure if exists K12_SURVEY_ANSWERS_INSERT_SURVEY;
+Create Procedure K12_SURVEY_ANSWERS_INSERT_SURVEY(IN surveyType INT(5), IN surveyID INT(15), IN questionID INT(15), IN answerID INT(15))
 insert into K12_SURVEY_ANSWERS values (null, surveyType, surveyID, questionID, answerID);
+
+Drop procedure if exists K12_TEACHER_AUTHENTICATED;
+Create Procedure K12_TEACHER_AUTHENTICATED(IN userName VARCHAR(50))
+select Authenticated From K12_TEACHER WHERE Email = userName;
+
+Drop procedure if exists K12_TEACHER_GETFULLNAME;
+Create Procedure K12_TEACHER_GETFULLNAME(IN userName VARCHAR(50))
+select FirstName, LastName from K12_TEACHER where Email = userName;
+
+Drop procedure if exists K12_TEACHER_UPDATEFULLNAME;
+Create Procedure K12_TEACHER_UPDATEFULLNAME(IN userName VARCHAR(50), IN newFirstName VARCHAR(30), IN newLastName VARCHAR(30))
+UPDATE K12_TEACHER SET FirstName = newFirstName, LastName = newLastName WHERE Email = userName;
+
+Drop procedure if exists K12_TEACHER_VERIFYREGISTRATIONCODE;
+Create Procedure K12_TEACHER_VERIFYREGISTRATIONCODE(IN userName VARCHAR(50), IN regCode VARCHAR(50))
+select count(*) as c from K12_TEACHER where Email = userName and RegistrationCode = regCode;
+
+Drop procedure if exists K12_TEACHER_AUTHENTICATE;
+Create Procedure K12_TEACHER_AUTHENTICATE(IN userName VARCHAR(50), IN regCode VARCHAR(50))
+UPDATE K12_TEACHER SET Authenticated = 'yes' WHERE Email = userName and RegistrationCode = regCode;
+
+Drop procedure if exists K12_EVENTS_INSERTEVENT;
+Create Procedure K12_EVENTS_INSERTEVENT(IN title VARCHAR(50), IN startDate VARCHAR(19), IN endDate VARCHAR(19), IN teacherID INT(15), IN eventID VARCHAR(25))
+insert into K12_EVENTS values(title, startDate, endDate, teacherID, eventID);
+
+Drop procedure if exists K12_EVENTS_GETEVENTS;
+Create Procedure K12_EVENTS_GETEVENTS()
+select * From K12_EVENTS;
+
+Drop procedure if exists K12_TEACHER_GETPASSWORD;
+Create Procedure K12_TEACHER_GETPASSWORD(IN userName VARCHAR(50), IN pwd VARCHAR(30))
+select Password from K12_TEACHER where Email = userName and Password = pwd;
+
+Drop procedure if exists K12_TEACHER_GETCOUNTAUTHENTICATED;
+Create Procedure K12_TEACHER_GETCOUNTAUTHENTICATED(IN userName VARCHAR(50), IN pwd VARCHAR(30))
+select count(*) as c from K12_TEACHER where Email = userName and Password = pwd;
+
+Drop procedure if exists K12_TEACHER_GETAUTHENTICATED_USERNAME_PASSWORD;
+Create Procedure K12_TEACHER_GETAUTHENTICATED_USERNAME_PASSWORD(IN userName VARCHAR(50), IN pwd VARCHAR(30))
+select Authenticated From K12_TEACHER WHERE Email = userName and Password = pwd;
+
+Drop procedure if exists K12_TEACHER_COUNTFORREGISTRATION;
+Create Procedure K12_TEACHER_COUNTFORREGISTRATION(IN userName VARCHAR(50))
+select count(*) as c from K12_TEACHER where Email = userName;
+
+Drop procedure if exists K12_POSTSURVEY_QUESTIONS_GETQUESTIONS;
+Create Procedure K12_POSTSURVEY_QUESTIONS_GETQUESTIONS()
+SELECT Question FROM K12_POSTSURVEY_QUESTIONS;
+
+Drop procedure if exists K12_LICHERT_ANSWERS_GETANSWERS;
+Create Procedure K12_LICHERT_ANSWERS_GETANSWERS()
+SELECT Description FROM K12_LICHERT_ANSWERS ORDER BY K12_LICHERT_ANSWERS.ID ASC;
+
+Drop procedure if exists K12_TEACHER_INSERTNEWTEACHER;
+Create Procedure K12_TEACHER_INSERTNEWTEACHER(IN email VARCHAR(50), IN firstName VARCHAR(30), IN lastName VARCHAR(30), IN school VARCHAR(40), IN education TEXT, IN csBackground TEXT, IN loginStatus BOOL, IN pwd VARCHAR(30), IN authenticated VARCHAR(30), IN regCode VARCHAR(50))
+insert into K12_TEACHER values(email, firstName, lastName, school, education,csBackground, loginStatus, pwd, authenticated, regCode, 3);
+
+Drop procedure if exists K12_TEACHER_PROMOTETEACHERACCESS;
+Create Procedure K12_TEACHER_PROMOTETEACHERACCESS(IN email VARCHAR(50))
+UPDATE K12_TEACHER SET AccessLevel = 2 WHERE Email = email;
+
+Drop procedure if exists K12_TEACHER_DEMOTETEACHERACCESS;
+Create Procedure K12_TEACHER_DEMOTETEACHERACCESS(IN email VARCHAR(50))
+UPDATE K12_TEACHER SET AccessLevel = 3 WHERE Email = email;
+
+Drop procedure if exists K12_PRESURVEY_QUESTIONS_GETQUESTIONAT;
+Create Procedure K12_PRESURVEY_QUESTIONS_GETQUESTIONAT(IN qIndex INT(5))
+SELECT Question FROM K12_PRESURVEY_QUESTIONS WHERE ID = qIndex;
+
+Drop procedure if exists K12_LICHERT_ANSWERS_GETANSWERS;
+Create Procedure K12_LICHERT_ANSWERS_GETANSWERS()
+SELECT Description FROM K12_LICHERT_ANSWERS ORDER BY K12_LICHERT_ANSWERS.ID ASC;
 
 
 Drop procedure if exists SP_COUNT_USER;

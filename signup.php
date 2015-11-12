@@ -138,6 +138,11 @@ if (isset($_POST['submit']))
                     
         //first check if the email already exists in the database
         $sql = "select count(*) as c from K12_TEACHER where Email = '" . $em. "'";
+
+
+        //$sql = "call K12_TEACHER_COUNTFORREGISTRATION($em)";    // use stored procedure
+        print $sql;
+
                     
                     
         $result = mysqli_query($con, $sql) or die("Error in the consult.." . mysqli_error($con)); //send the query to the database or quit if cannot connect
@@ -151,10 +156,16 @@ if (isset($_POST['submit']))
         else //the email doesn't exist yet
         {	
             $code = randomCodeGenerator(50);
+
             echo $pw . "<br/>";
             
             $sql = "insert into K12_TEACHER values('', '".$em."', '".$fn."', '".$ln."', '".$s."', '".$e."', '".$b."', '".$pw."', 'no', '".$code."', '3')";  
             print $sql . "<br/><br/>";
+
+            //$sql = "call K12_TEACHER_INSERTNEWTEACHER(<insertValues>)"; // stored procedure, value order below
+            // VALUES (userName, firstName, lastName, school, education, csBackground, loginStatus, pwd, authenticated, regCode  
+            //print $sql;
+
             $result= mysqli_query($con, $sql) or die(mysqli_error($con)); //a non-select statement query will return a result indicating if the 
                         
             if ($result) $msg = "<b>Your information is entered into the database. </b>";

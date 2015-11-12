@@ -1,9 +1,9 @@
 <!-- Jason Nelson
 Survey Functions
 Functions intended to perform survey related operations -->
-<?php
 
-$questionCount = 0;
+
+<?php
 
 
 // function ConnectToDatabase()
@@ -65,6 +65,17 @@ function PopulateQuestions($QuestionResult, $AnswerResult)
 	}
 	$questionCount = $i;
 	return $str;
+}
+
+function GetQuestionAt($questionQueryStr, $questionIndex)
+{
+	// will be the html formatted string with question at return
+	$str = "";
+
+	// retreive question from Database
+	$questionResult = mysqli_query($conn, $qSql) or die(mysql_error());
+
+
 }
 
 
