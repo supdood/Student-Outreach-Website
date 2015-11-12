@@ -1,17 +1,14 @@
 <?php
-	include "header.php";
+	include "surveyHeader.php";
 	include "../db/dbconnect.php";
+	include "utils/authenticationIncludes.php";
 ?> 
 <style type="text/css">
-/*	input[type="text"]
-	{
-		width: 30%;
-	}*/
 	div
 	{
 		width: 30%;
 		text-align: center;
-		margin: 5 auto;
+		margin: 0 auto;
 	}
 </style>
 
@@ -25,9 +22,9 @@
 ?>
 
 
-<div>
+<div class="row">
 	<span>  <?php  print $errorMsg  ?>  </span>
-	<label>Select a type of survey: </label>
+	<label style="margin:2">Select a type of survey: </label>
 	<form action="PreSurveyLanding.php" method="post" name="PreSurveyChoice">
 		<button name="btnPreSurvey">PreSurvey</button>
 	</form>
@@ -41,5 +38,5 @@
 
 
 <?php
-	include "footer.php";
+	include "surveyFooter.php";
 ?>

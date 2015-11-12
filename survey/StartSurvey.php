@@ -1,6 +1,7 @@
 <?php 
-    include "header.php"; 
+    include "surveyHeader.php"; 
     include "../db/dbconnect.php";
+    include "utils/authenticationIncludes.php";
 ?>
 
 <style type="text/css">
@@ -17,7 +18,7 @@
 
 </style>
 
-<?php  
+<?php
 
     // initialize error message string
     $errorMsg = "";
@@ -42,6 +43,7 @@
     {
         $teacherIDField = mysqli_fetch_array($teacherIDResult); //the query results are objects, in this case, one object
         $teacherID = $teacherIDField[0];
+        // print $teacherID;
 
         // create session variable for ID
         $_SESSION["teacherID"] = $teacherID;
@@ -75,7 +77,7 @@
                 $_SESSION["incompleteSurveys"][$i] = $surveyInfoArray;
                 $i++;
             }
-            //print_r($_SESSION["incompleteSurveys"]);
+            //print_r($_SESSION["incompleteSurveys"][0]);
         }
     }  
 
@@ -105,6 +107,6 @@
 
 <!-- Include the footer.  This includes the javascript. -->
 <?php
-include "footer.php";
+include "surveyFooter.php";
 ?>
 

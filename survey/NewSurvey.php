@@ -1,6 +1,7 @@
 <?php
-	include "header.php";
+	include "surveyHeader.php";
 	include "../db/dbconnect.php";
+	include "utils/authenticationIncludes.php";
 ?> 
 <style type="text/css">
 /*	input[type="text"]
@@ -26,12 +27,15 @@
 	$teacherID = "";
 	$teacherID = $_SESSION["teacherID"];
 
+	// initialize lastQuestionAnswered session variable
+	$_SESSION["lastQuestionAnswered"] = 1;
+
 
 ?>
 
 
 
-<div>
+<div class="row">
 	<span>  <?php  print $errorMsg  ?>  </span>
 	<form action="CreateNewClass.php" method="post">
 		<label for="className">Class Name: </lable>
@@ -50,5 +54,5 @@
 
 
 <?php
-	include "footer.php";
+	include "surveyFooter.php";
 ?>

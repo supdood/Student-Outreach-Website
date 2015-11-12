@@ -1,5 +1,7 @@
 <?php
+	session_start();
 	include "../db/dbconnect.php";
+	include "utils/authenticationIncludes.php";
 
 
 // grab Post variables
@@ -19,7 +21,8 @@ print $sqlNewClass;
 // $field = mysqli_fetch_array($result);
 // print $field[0];
 
-
+// insert new class, if successful get the new classID
+// and store value in session variable
 if(mysqli_query($conn, $sqlNewClass))
 {
 	print "after new class insert<br>";
@@ -43,7 +46,7 @@ if(mysqli_query($conn, $sqlNewClass))
 		// add class to TEACHER_CLASS mapping table
 		$sqlInsertToTeacherClass = "INSERT INTO `nelson8_db`.`K12_TEACHER_CLASS` (`TeacherID`, `ClassID`) VALUES ('".$_SESSION["teacherID"]."', '".$_SESSION["classID"]."')";
 		$resultInsertToTeacherClass = mysqli_query($conn, $sqlInsertToTeacherClass);
-		print $resultInsertToTeacherClass . "<br>";
+		//print $resultInsertToTeacherClass . "<br>";
 
 		// initialize lastQuestionAnswered session variable
 		$_SESSION["lastQuestionAnswered"] = 1;	// value initialized to one since this is a new survey and the
@@ -55,7 +58,7 @@ if(mysqli_query($conn, $sqlNewClass))
 else
 {
 	$errorStr = "Sorry, something went wrong. Please try again.";
-	// Header("location:StartSurvey.php?q=".$errorStr);
+	Header("location:StartSurvey.php?q=".$errorStr);
 }
 
 ?>

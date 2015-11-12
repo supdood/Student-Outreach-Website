@@ -89,11 +89,12 @@
                 <li><a href="calendar.php" class="">Event Calendar</a></li>
                 <?php if (isset($_SESSION['email'])) {
             echo '<li><a href="addEvent.php" class="">Add Event</a></li>';
-            echo '<li><a href="SurveyTemplate.php" class="">Survey</a></li>';
+            echo '<li><a href="survey/StartSurvey.php" class="">Survey</a></li>';
             echo '<li><a href="account.php" class="">Account</a></li>';
             if (isset($_SESSION['access'])) { 
                 if ($_SESSION['access'] == 1 || $_SESSION['access'] == 2)
                     echo '<li><a href="admin.php" class="">Admin</a></li>';
+                    echo '<li><a href="dataDownloads.php" class="">Data</a></li>';
             }
             echo '<li><a href="logout.php" class="">Log Out</a></li>';
 		} else {

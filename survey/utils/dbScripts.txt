@@ -3,6 +3,9 @@ Select r.ID, p.ID as PostID, UserName, FirstName, LastName, Gender, State, Birth
 From REGISTRATION as r, POST as p
 Where r.ID = p.UserID;
 
+Drop procedure if exists K12_SURVEY_INSERTNEWSURVEY;
+Create Procedure K12_SURVEY_INSERTNEWSURVEY(IN teacherID INT(15), IN classID INT(15), IN lastQuestionAnswered INT(3), IN completed VARCHAR(3),  IN surveyType INT(1))
+INSERT INTO `nelson8_db`.`K12_SURVEY` (`ID`, `TeacherID`, `ClassID`, `StartTime`, `EndTime`, `LastQuestionAnswered`, `Completed`, `SurveyTypeID`) VALUES (NULL, teacherID, classID, 'CURRENT_TIMESTAMP', NULL, '1', completed, surveyType);
 
 Drop procedure if exists K12_SURVEY_TEACHER_INCOMPLETESURVEY;
 Create Procedure K12_SURVEY_TEACHER_INCOMPLETESURVEY(IN email VARCHAR(50))
@@ -11,8 +14,8 @@ From K12_SURVEY as s, K12_TEACHER as t
 Where s.ID = t.ID AND s.Completed ="no" AND t.Email = email;
 
 Drop procedure if exists K12_SURVEY_ANSWERS_INSERT_SURVEY;
-Create Procedure K12_SURVEY_ANSWERS_INSERT_SURVEY(IN surveyType INT(5), IN surveyID INT(15), IN questionID INT(15), IN answerID INT(15))
-insert into K12_SURVEY_ANSWERS values (null, surveyType, surveyID, questionID, answerID);
+Create Procedure K12_SURVEY_ANSWERS_INSERT_SURVEY(IN surveyID INT(15), IN questionID INT(15), IN answerID INT(15))
+insert into K12_SURVEY_ANSWERS values (null, surveyID, questionID, answerID);
 
 Drop procedure if exists K12_TEACHER_AUTHENTICATED;
 Create Procedure K12_TEACHER_AUTHENTICATED(IN userName VARCHAR(50))
@@ -78,9 +81,21 @@ Drop procedure if exists K12_TEACHER_DEMOTETEACHERACCESS;
 Create Procedure K12_TEACHER_DEMOTETEACHERACCESS(IN email VARCHAR(50))
 UPDATE K12_TEACHER SET AccessLevel = 3 WHERE Email = email;
 
+Drop procedure if exists K12_TEACHER_GETALLTEACHERS;
+Create Procedure K12_TEACHER_GETALLTEACHERS()
+SELECT `ID`, `Email`, `FirstName`, `LastName`, `School`, `Education`, `CSBackground`, `Authenticated`,`RegistrationCode`, `AccessLevel` FROM `K12_TEACHER`;
+
+Drop procedure if exists K12_CLASS_GETALL;
+Create Procedure K12_CLASS_GETALL()
+SELECT * FROM `K12_CLASS`;
+
 Drop procedure if exists K12_PRESURVEY_QUESTIONS_GETQUESTIONAT;
 Create Procedure K12_PRESURVEY_QUESTIONS_GETQUESTIONAT(IN qIndex INT(5))
 SELECT Question FROM K12_PRESURVEY_QUESTIONS WHERE ID = qIndex;
+
+Drop procedure if exists K12_POSTSURVEY_QUESTIONS_GETQUESTIONAT;
+Create Procedure K12_POSTSURVEY_QUESTIONS_GETQUESTIONAT(IN qIndex INT(5))
+SELECT Question FROM K12_POSTSURVEY_QUESTIONS WHERE ID = qIndex;
 
 Drop procedure if exists K12_LICHERT_ANSWERS_GETANSWERS;
 Create Procedure K12_LICHERT_ANSWERS_GETANSWERS()

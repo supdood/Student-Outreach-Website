@@ -1,11 +1,7 @@
 <!-- Jason Nelson
 Survey Functions
 Functions intended to perform survey related operations -->
-
-
 <?php
-
-
 // function ConnectToDatabase()
 // {
 // 	$conn = mysqli_connect("localhost", "nelson8", "nelson8") or die(mysql_error());

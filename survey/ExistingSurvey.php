@@ -1,6 +1,7 @@
 <?php
-	include "header.php";
+	include "surveyHeader.php";
 	include "../db/dbconnect.php";
+	include "utils/authenticationIncludes.php";
 ?> 
 <style type="text/css">
 	.table{
@@ -29,7 +30,7 @@
 	{
 		$testTable .= "<tr>";
 		$val = $_SESSION["incompleteSurveys"][$i];
-		// print $val[$i];
+		print $val[$i];
 		// print count($val);
 		$dropDown .= "<option value='".$val[1]."'>".$val[1]."</option>";
 		for($j = 0; $j < count($val); $j++)
@@ -46,7 +47,7 @@
 
 
 
-<div>
+<div class="row">
 
 	<?php  print $testTable  ?>
 	<?php  print $dropDown  ?>
@@ -58,5 +59,5 @@
 
 
 <?php
-	include "footer.php";
+	include "surveyFooter.php";
 ?>

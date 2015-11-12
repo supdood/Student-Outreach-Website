@@ -134,7 +134,6 @@ if (isset($_SESSION['email'])) {
     		</div>
 	</form>
 <?php
-
     include "footer.php";
 ?>
 <html>
