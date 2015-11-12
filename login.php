@@ -73,7 +73,6 @@ if (isset($_SESSION['email'])) {
                     
                     $em = mysqli_real_escape_string($con, $em);
                     $pw = mysqli_real_escape_string($con, $pw);
-                    $_SESSION['email'] = $em;
 
 
 				    $sql = "select count(*) as c from K12_TEACHER where Email = '" . $em. "' and Password = '" .$pw. "'";
@@ -94,7 +93,16 @@ if (isset($_SESSION['email'])) {
                         $activated = mysqli_fetch_array($result);
                         if ($activated[0] == 'yes')
                            Header ("Location:account.php") ;
-                        else Header ("Location:activation.php") ;
+                        else 
+                            Header ("Location:activation.php") ;
+                        
+                        $_SESSION['email'] = $em;
+                        
+                        $sql = "select AccessLevel From K12_TEACHER WHERE Email = '" .$_SESSION['email']."'";
+                        $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
+                        $access = mysqli_fetch_array($result);
+                        $_SESSION['access'] = $access[0];
+                        
                     }
 				    else $msg = "<br/><b>The information entered does not match with the records in our database.</b>";
                     

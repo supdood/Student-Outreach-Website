@@ -25,7 +25,7 @@ function schoolField() {
 
 function eduField() {
     
-    $('#eduArea').html("<select id='eField'><option value='bs'>B.S.</option><option value='ms'>M.S.</option><option value='phd'>Ph.D.</option></select><button id='eName' onclick='updateEdu(eField.value)'>Save Changes</button>");
+    $('#eduArea').html("<select id='eField'><option value='bs'>B.S.</option><option value='ms'>M.S.</option><option value='phd'>Ph.D.</option></select><br/><button id='eName' onclick='updateEdu(eField.value)'>Save Changes</button>");
     
     $('#education').html("");
     
@@ -46,7 +46,7 @@ function updateName(fn, ln) {
                 }
             }
         }
-        xhttp.open("GET", "updateFiles/updateName.php?fn="+fn +"&ln="+ln, true);
+        xhttp.open("GET", "ajaxPHP/updateName.php?fn="+fn +"&ln="+ln, true);
         xhttp.send(); 
     }
     
@@ -67,7 +67,7 @@ function updateSchool(str) {
                 }
             }
         }
-        xhttp.open("GET", "updateFiles/updateSchool.php?s="+str, true);
+        xhttp.open("GET", "ajaxPHP/updateSchool.php?s="+str, true);
         xhttp.send(); 
     }
     
@@ -97,7 +97,7 @@ function updateEdu(str) {
                 }
             }
         }
-        xhttp.open("GET", "updateFiles/updateEdu.php?e="+str, true);
+        xhttp.open("GET", "ajaxPHP/updateEdu.php?e="+str, true);
         xhttp.send(); 
     }
     

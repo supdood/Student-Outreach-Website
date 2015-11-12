@@ -42,19 +42,24 @@ a.pull-right {
 #updateName, #updateSchool, #updateEdu{
     
     font-size: 75%;
-    color:Blue;
+    color:#337ab7;
     font-weight: bold;
     
 }
 
-#fnField, #lnField {
-    
-    width: 25%;
-    
+#updateName:hover, #updateSchool:hover, #updateEdu:hover {
+  color: #23527c;
 }
 
-#sField, #eField {
+#fnField, #lnField, #sField, #eField {
     
     width: 40%;
     
 }
+
+#promoteText {
+    
+    width: 400px;
+    
+}
+
