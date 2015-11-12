@@ -76,7 +76,7 @@ if (isset($_SESSION['email'])) {
 
 
 				    $sql = "select count(*) as c from K12_TEACHER where Email = '" . $em. "' and Password = '" .$pw. "'";
-                    //$sql = "call K12_TEACHER_GETCOUNTAUTHENTICATED($em, $pw)";  // use stored procedure
+                    //$sql = "call K12_TEACHER_GETCOUNTAUTHENTICATED('".$em."', '".$pw."')";  // use stored procedure
 
 				    //print $sql. ' ' . $_SESSION['email'];
 				    $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
@@ -87,7 +87,7 @@ if (isset($_SESSION['email'])) {
 						  
 
                         $sql = "select Authenticated From K12_TEACHER WHERE Email = '" .$em. "' and Password = '".$pw. "'";
-                        //$sql = "call K12_TEACHER_GETAUTHENTICATED_USERNAME_PASSWORD($em, $pw)"; // use stored procedure
+                        //$sql = "call K12_TEACHER_GETAUTHENTICATED_USERNAME_PASSWORD('".$em."', '".$pw."')"; // use stored procedure
 
                         $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
                         $activated = mysqli_fetch_array($result);

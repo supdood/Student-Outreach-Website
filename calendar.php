@@ -38,7 +38,12 @@
 
                 while($row = mysqli_fetch_array($result))
                 {
-                echo "{title:'" . $row['Title'] . "', start: '" . $row['StartDate'] . "'},";
+                    $output = "{title:'" . $row['Title'] . "', start: '" . $row['StartDate'];
+                    if($row['EndDate'] != '')
+                        $output = $output . "', end: '" . $row['EndDate'] . "'},";
+                    else
+                        $output = $output . "'},";
+                    echo $output;
                 
                 }
                 
