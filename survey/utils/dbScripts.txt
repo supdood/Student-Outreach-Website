@@ -3,6 +3,11 @@ Select r.ID, p.ID as PostID, UserName, FirstName, LastName, Gender, State, Birth
 From REGISTRATION as r, POST as p
 Where r.ID = p.UserID;
 
+Drop procedure if exists K12_CLASS_CREATENEWCLASS;
+Create procedure K12_CLASS_CREATENEWCLASS(IN className VARCHAR(50), IN classDescription TEXT)
+INSERT INTO  `nelson8_db`.`K12_CLASS` (`ID` ,`Name` ,`Description`) VALUES (NULL ,  className, classDescription);
+
+
 Drop procedure if exists K12_SURVEY_INSERTNEWSURVEY;
 Create Procedure K12_SURVEY_INSERTNEWSURVEY(IN teacherID INT(15), IN classID INT(15), IN lastQuestionAnswered INT(3), IN completed VARCHAR(3),  IN surveyType INT(1))
 INSERT INTO `nelson8_db`.`K12_SURVEY` (`ID`, `TeacherID`, `ClassID`, `StartTime`, `EndTime`, `LastQuestionAnswered`, `Completed`, `SurveyTypeID`) VALUES (NULL, teacherID, classID, 'CURRENT_TIMESTAMP', NULL, '1', completed, surveyType);
@@ -15,7 +20,7 @@ Where s.ID = t.ID AND s.Completed ="no" AND t.Email = email;
 
 Drop procedure if exists K12_SURVEY_ANSWERS_INSERT_SURVEY;
 Create Procedure K12_SURVEY_ANSWERS_INSERT_SURVEY(IN surveyID INT(15), IN questionID INT(15), IN answerID INT(15))
-insert into K12_SURVEY_ANSWERS values (null, surveyID, questionID, answerID);
+insert into K12_SURVEY_ANSWERS values (surveyID, questionID, answerID);
 
 Drop procedure if exists K12_TEACHER_AUTHENTICATED;
 Create Procedure K12_TEACHER_AUTHENTICATED(IN userName VARCHAR(50))
@@ -96,6 +101,20 @@ SELECT Question FROM K12_PRESURVEY_QUESTIONS WHERE ID = qIndex;
 Drop procedure if exists K12_POSTSURVEY_QUESTIONS_GETQUESTIONAT;
 Create Procedure K12_POSTSURVEY_QUESTIONS_GETQUESTIONAT(IN qIndex INT(5))
 SELECT Question FROM K12_POSTSURVEY_QUESTIONS WHERE ID = qIndex;
+
+Drop procedure if exists K12_PRESURVEY_QUESTIONS_GETQUESTIONCOUNT;
+Create procedure K12_PRESURVEY_QUESTIONS_GETQUESTIONCOUNT()
+SELECT count(*) as c FROM K12_PRESURVEY_QUESTIONS;
+
+Drop procedure if exists K12_POSTSURVEY_QUESTIONS_GETQUESTIONCOUNT;
+Create procedure K12_POSTSURVEY_QUESTIONS_GETQUESTIONCOUNT()
+SELECT count(*) as c FROM K12_POSTSURVEY_QUESTIONS;
+
+Drop procedure if exists K12_SURVEY_GETSURVEYTYPE;
+Create procedure K12_SURVEY_GETSURVEYTYPE(IN surveyID INT(15))
+SELECT t.Description
+FROM K12_SURVEY as s, K12_SURVEYTYPE as t
+WHERE s.ID = surveyID AND s.SurveyTypeID = t.ID;
 
 Drop procedure if exists K12_LICHERT_ANSWERS_GETANSWERS;
 Create Procedure K12_LICHERT_ANSWERS_GETANSWERS()

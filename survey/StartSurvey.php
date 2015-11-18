@@ -35,9 +35,10 @@
     // print $sqlTeacherID;
     $teacherIDResult = mysqli_query($conn, $sqlTeacherID) or die(mysql_error());
 
+	// Ensure that teacherID is retrieved
     if(!$teacherIDResult) 
     {
-        $errorMsg .= "Error retreiveing ID.<br>";
+        $errorMsg .= "Error retrieveing ID.<br>";
     }
     else
     {
@@ -48,8 +49,9 @@
         // create session variable for ID
         $_SESSION["teacherID"] = $teacherID;
 
-        // if teacherID found, get incomplete surveys
+        // since teacherID found, get incomplete surveys
         $sqlIncompleteSurvey = "";
+		//TODO: include class name in the incompleteSurvey sql statement/array to include more info for the user
         $sqlIncompleteSurvey = "SELECT ID as SurveyID, ClassID, LastQuestionAnswered FROM K12_SURVEY WHERE Completed = 'no' AND TeacherID = '" . $teacherID."'";
         //print $sqlIncompleteSurvey;
         $incompleteSurveyResult = mysqli_query($conn, $sqlIncompleteSurvey) or die(mysql_error());
@@ -61,6 +63,7 @@
         else
         {
             // build 2D array of incomplete survey information
+			// counter for primary level of array
             $i = 0;
             // create session variable for incomplete surveys
             $_SESSION["incompleteSurveys"] = array(); // initialize session variable

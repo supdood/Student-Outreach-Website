@@ -21,9 +21,12 @@
 	$errorMsg = "";
 
 	// pass dropdown selection value to session variable
-	$_SESSION["selectedSurvey"] = $_POST["existingSurvey"];
+	// surSelect is the selected dropdown option's value -- which is the SurveyID of the selected survey
+	$_SESSION["surveyID"] = $_GET["surSelect"];
+	$_SESSION["classID"] = $_GET["classID"];
 
-
+	// print $_SESSION["surveyID"];
+	// print $_SESSION["classID"];
 ?>
 
 
@@ -32,7 +35,7 @@
 	<h2>To continue with this survey, click the Start button.</h2>
 	<h3>The survey should take 5-150 mins.</h3>
 	<form action="NextQuestion.php" method="post">
-		<button name="btnContinueSurvey">Start</button>
+		<button name="btnExistingSurvey">Start</button>
 	</form>
 
 </div>

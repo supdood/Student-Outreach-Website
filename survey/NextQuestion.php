@@ -14,8 +14,22 @@
 
         // identifying survey type
         $_SESSION["surveyType"] = "pre";
+
+        // get total count of questions
+        $questionCountSql = "call K12_PRESURVEY_QUESTIONS_GETQUESTIONCOUNT()";
+        $questionCountResult = mysqli_query($conn, $questionCountSql);
+        $questionCountField = mysqli_fetch_array($questionCountResult);
+        if(count($questionCountField != 0))
+        {
+            $_SESSION["questionCount"] = $questionCountField[0];
+        }
+
+        $questionCountSql = "";
+        mysqli_free_result($questionCountResult);
+        $questionCountField = "";
+
         // create new survey in database
-        $insertSql = "K12_SURVEY_INSERTNEWSURVEY('".$_SESSION["teacherID"]."', '".$_SESSION["classID"]."', '".$_SESSION["lastQuestionAnswered"]."', 'no', 'pre'";
+        $insertSql = "call K12_SURVEY_INSERTNEWSURVEY('".$_SESSION["teacherID"]."', '".$_SESSION["classID"]."', '".$_SESSION["lastQuestionAnswered"]."', 'no', 'pre'";
         if(mysqli_query($conn, $insertSql))
         {
             $notifications .= "PreSurvey successfully created<br>";
@@ -31,6 +45,10 @@
 
             $notifications .= "<br>" . $surveyID;   
         }
+
+        $getSurveyIDSql = "";
+        mysqli_free_result($getSurveyIDResult);
+        $field = "";
         
 
     }
@@ -40,9 +58,25 @@
         $notifications = "";
 
         // identifying survey type
-        $_SESSION["surveyType"] = "post";   
+        $_SESSION["surveyType"] = "post";
+
+        // get total count of questions
+        $questionCountSql = "call K12_POSTSURVEY_QUESTIONS_GETQUESTIONCOUNT()";
+        $questionCountResult = mysqli_query($conn, $questionCountSql);
+        $questionCountField = mysqli_fetch_array($questionCountResult);
+        if(count($questionCountField != 0))
+        {
+            $_SESSION["questionCount"] = $questionCountField[0];
+        }
+
+        $questionCountSql = "";
+        mysqli_free_result($questionCountResult);
+        $questionCountField = "";
+
+
+
         // create new survey in database
-        $insertSql = "K12_SURVEY_INSERTNEWSURVEY('".$_SESSION["teacherID"]."', '".$_SESSION["classID"]."', '".$_SESSION["lastQuestionAnswered"]."', 'no', 'post'";
+        $insertSql = "call K12_SURVEY_INSERTNEWSURVEY('".$_SESSION["teacherID"]."', '".$_SESSION["classID"]."', '".$_SESSION["lastQuestionAnswered"]."', 'no', 'post'";
         if(mysqli_query($conn, $insertSql))
         {
             $notifications .= "PostSurvey successfully created<br>";
@@ -58,6 +92,10 @@
 
             $notifications .= "<br>" . $surveyID;   
         }
+
+        $getSurveyIDSql = "";
+        mysqli_free_result($getSurveyIDResult);
+        $field = "";
     }
 
     if(isset($_POST["btnExistingSurvey"]))
@@ -65,33 +103,95 @@
         // intiialize the notifications variable
         $notifications = "";
 
-        // clearing surveyType session variable
-        // since the survey already exists, we can get the surveyType if we need it
-        $_SESSION["surveyType"] = "";   
+        // get surveyType of existing survey
+        $surveyTypeSql = "call K12_SURVEY_GETSURVEYTYPE(".$_SESSION["surveyID"].")";
+        $surveyTypeResult = mysqli_query($conn, $surveyTypeSql);
+        $surveyTypeField = mysqli_fetch_array($surveyTypeResult);
+        if(count($surveyTypeField != 0))
+        {
+            // set session variable
+            $_SESSION["surveyType"] = $surveyTypeField[0];
+        }
+
+        $surveyTypeSql = "";
+        mysqli_free_result($surveyTypeResult);
+        $surveyTypeField = "";
+
+        if($_SESSION["surveyType"] == "pre")
+        {
+            // get total count of questions
+            $questionCountSql = "";
+            // $questionCountSql = "CALL K12_PRESURVEY_QUESTIONS_GETQUESTIONCOUNT()";
+            $questionCountSql = "SELECT count(*) as c FROM K12_PRESURVEY_QUESTIONS";
+            $questionCountResult = mysqli_query($conn, $questionCountSql);
+            $questionCountField = mysqli_fetch_array($questionCountResult);
+
+            if(count($questionCountField != 0))
+            {
+                $_SESSION["questionCount"] = $questionCountField[0];
+            }
+
+            $questionCountSql = "";
+            mysqli_free_result($questionCountResult);
+            $questionCountField = "";
+        }
+        elseif($_SESSION["surveyType"] == "post")
+        {
+            // get total count of questions
+            // $questionCountSql = "CALL K12_POSTSURVEY_QUESTIONS_GETQUESTIONCOUNT()";
+            $questionCountSql = "SELECT count(*) as c FROM K12_POSTSURVEY_QUESTIONS";
+            $questionCountResult = mysqli_query($conn, $questionCountSql);
+            $questionCountField = mysqli_fetch_array($questionCountResult);
+            if(count($questionCountField != 0))
+            {
+                $_SESSION["questionCount"] = $questionCountField[0];
+            }
+
+            $questionCountSql = "";
+            mysqli_free_result($questionCountResult);
+            $questionCountField = "";
+        }
+        // else
+        // {
+        //     $countError = "Sorry, there has been an error with the survey. Please try again later.";
+        //     $countErrorType = "could not get question count";
+        //     Header("location:StartSurvey.php?q=".$countError."&errorType=".$countErrorType);
+        // }
+
         // create new survey in database
         // $insertSql = "K12_SURVEY_INSERTNEWSURVEY('".$_SESSION["teacherID"]."', '".$_SESSION["classID"]."', '".$_SESSION["lastQuestionAnswered"]."', 'no', 'post'";
-        $existingSql = "Select lastQuestionAnswered FROM K12_SURVEY WHERE SurveyID = '".$_SESSION["selected"]."'";
+        $existingSql = "Select lastQuestionAnswered FROM K12_SURVEY WHERE ID = '".$_SESSION["surveyID"]."'";
+        // print $existingSql . "<br>";
         $existingResult = mysqli_query($conn, $existingSql);
 
         $fields = mysqli_fetch_array($existingResult);
         // populate lastQuestionAnswered session variable
         $_SESSION["lastQuestionAnswered"] = $fields[0];
+
+        $existingSql = "";
+        mysqli_free_result($existingResult);
+        $fields = "";
     }
 
 
     if(isset($_POST["enter"]))
     {
         $notifications = "";
-        $surveyID = $_POST["surveyID"];
+        $surveyID = $_SESSION["surveyID"];
         // increment lastQuestionAsked
         $_SESSION["lastQuestionAnswered"]++;
         $previousQuestionIndx = $_SESSION["lastQuestionAnswered"] - 1;
+
+
         if(isset($_POST["answer"]))
         {
+            print "answer has been submitted";
             // insert last answer into TEACHER_ANSWERS
-            $insertPrevAnswer = "call K12_SURVEY_ANSWERS_INSERT_SURVEY('".$surveyID."', '".$previousQuestionIndx."'', '".$_POST["answer"]."')";
+
+            $insertPrevAnswer = "call K12_SURVEY_ANSWERS_INSERT_SURVEY(".$surveyID.", ".$previousQuestionIndx.", ".$_POST["answer"].")";
             if(mysqli_query($conn, $insertPrevAnswer))
             {
+                print "<br> answer successfully stored";
                 // update SURVEY lastQuestionAnswered field
                 $updateLastQuestionAnswered = "UPDATE  K12_SURVEY SET LastQuestionAnswered = '".$_SESSION["lastQuestionAnswered"]."' WHERE  ID ='".$surveyID."'";
                 if(mysqli_query($conn, $updateLastQuestionAnswered))
@@ -99,10 +199,7 @@
                     $notifications .= "Previous Answer Successfully Saved.<br>";
                 }
             }
-            
         }
-
-
     }  
     // initialize error message string
     $errorMsg = "";
@@ -136,6 +233,7 @@
 
     // $aSql = "call K12_LICHERT_ANSWERS_GETANSWERS()"; // returns values in ASC order
 
+    //TODO: incorporate table from DB rather than local array
     // $answerResult = mysqli_query($conn, $aSql) or die(mysql_error());
     $answerArray = array();
     $answerArray[1] = "Strongly Agree";

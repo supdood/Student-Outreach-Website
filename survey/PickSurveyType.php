@@ -15,6 +15,8 @@
 <?php
 	// initialize error variable
 	$errorMsg = "";
+	
+	$postSurveyAvail = $_GET["postSurveyAvail"];
 
 
 
@@ -29,9 +31,12 @@
 		<button name="btnPreSurvey">PreSurvey</button>
 	</form>
 	<br>
+	<?php if($postSurveyAvail) print <<<postSurveyForm
 	<form action="PostSurveyLanding.php" method="post" name="PostSurveyChoice">
 		<button name="btnPostSurvey">PostSurvey</button>
 	</form>
+postSurveyForm
+	?>
 
 </div>
 

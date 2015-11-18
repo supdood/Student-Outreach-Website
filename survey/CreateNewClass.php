@@ -3,6 +3,7 @@
 	include "../db/dbconnect.php";
 	include "utils/authenticationIncludes.php";
 
+$errorStr = "";
 
 // grab Post variables
 $className = trim($_POST["className"]);
@@ -12,9 +13,12 @@ $classDescription = trim($_POST["classDescription"]);
 $className = mysqli_real_escape_string($conn, $className);
 $classDescription = mysqli_real_escape_string($conn, $classDescription);
 
-print "Before new class insert<br>";
-$sqlNewClass = "INSERT INTO  `nelson8_db`.`K12_CLASS` (`ID` ,`Name` ,`Description`) VALUES (NULL ,  '".$className."',  '".$classDescription."')";
-print $sqlNewClass;
+$errorStr .= "<br>" . $className . "<br>" . $classDescription;
+
+// print "Before new class insert<br>";
+// $sqlNewClass = "INSERT INTO  `nelson8_db`.`K12_CLASS` (`ID` ,`Name` ,`Description`) VALUES (NULL ,  '".$className."',  '".$classDescription."')";
+$sqlNewClass = "call K12_CLASS_CREATENEWCLASS('".$className."', '".$classDescription."')";
+// print $sqlNewClass;
 // $result = mysqli_query($conn, $sqlNewClass);
 
 // print count($result);
@@ -25,16 +29,17 @@ print $sqlNewClass;
 // and store value in session variable
 if(mysqli_query($conn, $sqlNewClass))
 {
-	print "after new class insert<br>";
-	$sqlGetNewClassID = "Select ID FROM K12_CLASS WHERE ClassName ='". $className . "'";
-	print $sqlGetNewClassID;
+	$errorStr .= "<br>after new class insert";
+	$sqlGetNewClassID = "Select ID FROM K12_CLASS WHERE Name ='". $className . "'";
+	// print $sqlGetNewClassID;
 	$resultClassID = mysqli_query($conn, $sqlGetNewClassID);
-	print "after selecting new ClassID insert<br>";
-	print count($resultClassID);
+	// print "after selecting new ClassID insert<br>";
+	// print count($resultClassID);
 	if(count($resultClassID != 0))
 	{
-		print $resultClassID."<br>";
-		// intialize classID session variable
+		// print $resultClassID."<br>";
+		
+		// initialize classID session variable
 		$_SESSION["classID"] = "";
 
 		// fetch value for session variable
@@ -45,19 +50,46 @@ if(mysqli_query($conn, $sqlNewClass))
 
 		// add class to TEACHER_CLASS mapping table
 		$sqlInsertToTeacherClass = "INSERT INTO `nelson8_db`.`K12_TEACHER_CLASS` (`TeacherID`, `ClassID`) VALUES ('".$_SESSION["teacherID"]."', '".$_SESSION["classID"]."')";
-		$resultInsertToTeacherClass = mysqli_query($conn, $sqlInsertToTeacherClass);
-		//print $resultInsertToTeacherClass . "<br>";
+		if(mysqli_query($conn, $sqlInsertToTeacherClass))
+		{
+			$errorStr .=   "<br>" . $resultInsertToTeacherClass;
 
-		// initialize lastQuestionAnswered session variable
-		$_SESSION["lastQuestionAnswered"] = 1;	// value initialized to one since this is a new survey and the
-												// question ID's start at 1
+			// initialize lastQuestionAnswered session variable
+			$_SESSION["lastQuestionAnswered"] = 1;	// value initialized to one since this is a new survey and the
+													// question ID's start at 1
+													
+			// Next check to see if a Pre survey has been yet taken for this classID,
+			// if no Pre survey taken, teacher is not allowed to take post survey (until pre survey for class has been submitted)
+			
+			$preSurveyTakenForClassIDSql = "SELECT count(*) FROM K12_SURVEY WHERE ClassID = '".$_SESSION["classID"]."' AND SurveyTypeID = '1'";
+			$preSurveyTakenForClassIDResult = mysqli_query($conn, $preSurveyTakenForClassIDSql);
+			$preSurveyTakenField = mysqli_fetch_array($preSurveyTakenForClassIDResult);
+			// initialize count variable
+			$count = 0;
+			$count = $preSurveyTakenField[0];
+			// if count does not equal zero, teacher has taken pre survey thusly the post survey option will be available
+			// initialize $postSurveyAvail
+			$postSurveyAvail = false;
+			if($count != 0)
+			{
+				$postSurveyAvail = true;
+			}
+			
+			
+			
 
-		Header("location:PickSurveyType.php");
+			Header("location:PickSurveyType.php?postSurveyAvail=".$postSurveyAvail);
+		}
+		else
+		{
+			$errorStr .= "<br>Sorry, something went wrong. Please try again.";
+			Header("location:StartSurvey.php?q=".$errorStr);
+		}
 	}	
 }
 else
 {
-	$errorStr = "Sorry, something went wrong. Please try again.";
+	$errorStr .= "<br>Sorry, something went wrong. Please try again.";
 	Header("location:StartSurvey.php?q=".$errorStr);
 }
 
