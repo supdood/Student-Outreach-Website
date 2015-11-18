@@ -75,19 +75,23 @@ if (isset($_SESSION['email'])) {
                     $pw = mysqli_real_escape_string($con, $pw);
 
 
-				    $sql = "select count(*) as c from K12_TEACHER where Email = '" . $em. "' and Password = '" .$pw. "'";
-                    //$sql = "call K12_TEACHER_GETCOUNTAUTHENTICATED('".$em."', '".$pw."')";  // use stored procedure
+				    //$sql = "select count(*) as c from K12_TEACHER where Email = '" . $em. "' and Password = '" .$pw. "'";
+                    $sql = "call K12_TEACHER_GETCOUNTAUTHENTICATED('".$em."', '".$pw."');";  // use stored procedure
 
-				    //print $sql. ' ' . $_SESSION['email'];
 				    $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
 				    $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
-				    $count = $field->c;
-					
+                    
+                    //Prepare the db for the next query.
+                    $result->close();
+                    $con->next_result();
+				    
+                    $count = $field->c;
+                    
 				    if ($count > 0) {
 						  
 
-                        $sql = "select Authenticated From K12_TEACHER WHERE Email = '" .$em. "' and Password = '".$pw. "'";
-                        //$sql = "call K12_TEACHER_GETAUTHENTICATED_USERNAME_PASSWORD('".$em."', '".$pw."')"; // use stored procedure
+                        //$sql = "select Authenticated From K12_TEACHER WHERE Email = '" .$em. "' and Password = '".$pw. "'";
+                        $sql = "call K12_TEACHER_GETAUTHENTICATED_USERNAME_PASSWORD('".$em."', '".$pw."');"; // use stored procedure
 
                         $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
                         $activated = mysqli_fetch_array($result);
@@ -102,6 +106,7 @@ if (isset($_SESSION['email'])) {
                         $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
                         $access = mysqli_fetch_array($result);
                         $_SESSION['access'] = $access[0];
+                        
                         
                     }
 				    else $msg = "<br/><b>The information entered does not match with the records in our database.</b>";

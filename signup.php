@@ -137,11 +137,10 @@ if (isset($_POST['submit']))
         $pw = mysqli_real_escape_string($con, $pw);
                     
         //first check if the email already exists in the database
-        $sql = "select count(*) as c from K12_TEACHER where Email = '" . $em. "'";
-
+        //$sql = "select count(*) as c from K12_TEACHER where Email = '" . $em. "'";
+        $sql = "call K12_TEACHER_COUNTFORREGISTRATION('".$em."');";  // use stored procedure
 
         //$sql = "call K12_TEACHER_COUNTFORREGISTRATION($em)";    // use stored procedure
-        print $sql;
 
                     
                     
@@ -149,6 +148,10 @@ if (isset($_POST['submit']))
         $count = 0;
         $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
         $count = $field->c;
+        
+        $result->close();
+        $con->next_result();
+        
         if ($count != 0)
         {	
             Header ("Location:login.php") ;				
@@ -157,14 +160,10 @@ if (isset($_POST['submit']))
         {	
             $code = randomCodeGenerator(50);
 
-            echo $pw . "<br/>";
-            
-            $sql = "insert into K12_TEACHER values('', '".$em."', '".$fn."', '".$ln."', '".$s."', '".$e."', '".$b."', '".$pw."', 'no', '".$code."', '3')";  
-            print $sql . "<br/><br/>";
+            //$sql = "insert into K12_TEACHER values('', '".$em."', '".$fn."', '".$ln."', '".$s."', '".$e."', '".$b."', '".$pw."', 'no', '".$code."', '3')";  
 
-            //$sql = "call K12_TEACHER_INSERTNEWTEACHER(<insertValues>)"; // stored procedure, value order below
+            $sql = "call K12_TEACHER_INSERTNEWTEACHER('".$em."', '".$fn."', '".$ln."', '".$s."', '".$e."', '".$b."', '".$pw."', 'no', '".$code."');"; // stored procedure, value order below
             // VALUES (userName, firstName, lastName, school, education, csBackground, loginStatus, pwd, authenticated, regCode  
-            //print $sql;
 
             $result= mysqli_query($con, $sql) or die(mysqli_error($con)); //a non-select statement query will return a result indicating if the 
                         

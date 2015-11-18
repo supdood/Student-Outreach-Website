@@ -196,6 +196,71 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
             echo ($promoteUI);
             
         }
+		else {
+			
+			$dataTableUI = "
+                    <br/>
+                    User Email:<input type='text' id='teacherData'>
+                    <button onclick='getData(teacherData.value)'>Search</button>
+					
+					<br/><div id='msg'></div>
+                    
+                    <span id='table'>
+                    
+                    <table id='data' class='display' cellspacing='0' width='100%'> 
+                    <thead><tr>
+                        <th>Question Number</th><th>Question</th><th>Answer</th></tr></thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    </span>
+            
+			<script>
+			//The getData function.  This connects to the dataTable.php file to get the data on users searched.
+                    
+                    function getData(str) {
+                        var xhttp;
+                        xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                                
+                                var data = JSON.parse(xhttp.responseText); 
+                                //If no user was found with the given last name, it gives an error message.
+                                if (data.length == 0) {
+                                    document.getElementById('msg').innerHTML = '<b>No user with the last name ' + str + ' found.</b><br/><br/>';
+                                    
+                                    //clear the table 
+                                    $('#data').DataTable().clear().draw();
+                                }
+                                else {
+                                    
+                                document.getElementById('msg').innerHTML = '';    
+                                    
+                                //clear the table before new rows are added
+                                $('#data').DataTable().clear().draw();
+                        
+                                //Adds user data to the table one user at a time.
+                                   $(document).ready(function() {
+                                       for (i = 0; i < data.length; i++) {
+                                            $('#data').DataTable().row.add([
+                                                data[i][0],
+                                                data[i][1],
+                                                data[i][2]
+                                            ]).draw(false);
+                                       }
+                                    });
+                                }
+                                    
+                            }
+                        }
+                        xhttp.open('GET', 'ajaxPHP/dataTable.php?q='+str, true);
+                        xhttp.send();   
+                    }
+			</script>";
+			
+			echo($dataTableUI);
+		
+		}
         
         ?>
         

@@ -42,19 +42,23 @@ require_once "inc/dbconnect.php";
                         $code = mysqli_real_escape_string($con, $code);
                         $em = mysqli_real_escape_string($con, $em);
 
-                       //$sql = "call K12_TEACHER_VERIFYREGISTRATIONCODE($em, $code)"; // using stored procedure
-					   $sql = "select count(*) as c from K12_TEACHER where Email = '" . $em. "' and RegistrationCode = '".$code. "'";
+                       $sql = "call K12_TEACHER_VERIFYREGISTRATIONCODE('".$em."', '".$code."')"; // using stored procedure
+					   //$sql = "select count(*) as c from K12_TEACHER where Email = '" . $em. "' and RegistrationCode = '".$code. "'";
                         //TODO: replace $sql below with stored procedure call
                         
-					   $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
-					   $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
-					   $count = $field->c;
+                        $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
+                        $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
+                        $count = $field->c;
+                        
+                        //Prepare the db for the next query.
+                        $result->close();
+                        $con->next_result();
 					
 					   if ($count > 0) {
 						  
-                           $sql = "UPDATE K12_TEACHER SET Authenticated = 'yes' WHERE Email = '" .$em. "' and RegistrationCode = '".$code. "'";
+                           //$sql = "UPDATE K12_TEACHER SET Authenticated = 'yes' WHERE Email = '" .$em. "' and RegistrationCode = '".$code. "'";
 
-                           //$sql = "call K12_TEACHER_AUTHENTICATE($em, $code)";    // using stored procedure
+                           $sql = "call K12_TEACHER_AUTHENTICATE('".$em."', '".$code."')";    // using stored procedure
                            $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
                            
                            Header ("Location:account.php") ;
