@@ -56,11 +56,11 @@
 <script>
 function getDropdownValue(classID)
 {
-	alert("ClasID: "+classID);
+	// alert("ClasID: "+classID);
 	var dropDownBox = document.getElementById("existingSurvey");
 	// alert(dropDownBox.name);
 	var surveyID = dropDownBox.options[dropDownBox.selectedIndex].id;
-	alert("ClassID: "+classID + "  --  SurveyID:  "+ surveyID);
+	// alert("ClassID: "+classID + "  --  SurveyID:  "+ surveyID);
 	var link = "ExistingSurveyLanding.php?surSelect="+surveyID+"&classID="+classID;
 	window.location.assign(link);
 
