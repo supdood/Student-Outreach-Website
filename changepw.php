@@ -59,14 +59,15 @@ if (isset($_POST['enter'])) {
         $opw = mysqli_real_escape_string($con, $opw);
         $npw = mysqli_real_escape_string($con, $npw);
 
-        $sql = "select Password from K12_TEACHER where Email = '" . $em. "' and Password = '".$opw. "'";
+        $sql = "select Password from K12_TEACHER where Email = '" . $em. "'";
         //print $sql. ' ' . $_SESSION['email'];
         $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
         $field = mysqli_fetch_array($result); //the query results are objects, in this case, one object
 					
-        if ($opw == $field[0]) {
-						  
-            $sql = "UPDATE K12_TEACHER SET Password = '" .$npw. "' WHERE Email = '" .$em. "' and Password = '".$opw. "'";
+        if (password_verify($opw, $field[0])) {
+				
+            $npw = password_hash($npw, PASSWORD_BCRYPT);
+            $sql = "UPDATE K12_TEACHER SET Password = '" .$npw. "' WHERE Email = '" .$em. "' and Password = '".$field[0]. "'";
             $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
             $msg = "Your password has been successfully changed. <br/><br/>";
             //Header ("Location:account.php") ;

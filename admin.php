@@ -70,13 +70,17 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
             <ul class='nav nav-tabs'>
                 <li class='active'><a href='#tDataTab'>Teacher Data</a></li>
                 <li><a href='#promote'>Promote Admins</a></li>
+                <li><a href='#demote'>Demote Admins</a></li>
             </ul>
             <div class='tab-content'>
             
             <div id='tDataTab' class='tab-pane fade in active'>
                     <br/>
-                    User Email:<input type='text' id='teacherData'>
-                    <button onclick='getData(teacherData.value)'>Search</button>
+                    User Email:<input type='text' id='teacherData' onkeyup='getSurveys(this.value)'>
+                    Survey ID:<br/><select  name='surveySelect' id='surveySelect'>
+                    </select>
+                    <button onclick='getData(teacherData.value, surveySelect.value)'>Search</button>
+                    <br/><br/><div id='msgDT'></div>
                     
                     <span id='table'>
                     
@@ -97,7 +101,20 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
             Suggestions: <span id='txtHint'></span>
             <br/><button id='promoteBtn' onclick='makeAdmin(promoteText.value)'>Promote</button>
             
-            <br/><div id='msg'></div>
+            <br/><br/><div id='msg'></div></div>
+            
+            <div id='demote' class='tab-pane fade'>
+            
+            <br/>
+            User Email:<input type='text' id='demoteText' onkeyup='showDemoteHint(this.value)'>
+            Suggestions: <span id='demoteHint'></span>
+            <br/><button id='promoteBtn' onclick='demoteAdmin(demoteText.value)'>Demote</button>
+            
+            <br/><br/><div id='msgD'></div></div>
+            
+
+            
+            </div>
             
             <script>
                     //The showHint function.  This connects to suggestion.php to find suggested last names based on the characters typed so far.
@@ -117,6 +134,24 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                         xhttp.open('GET', 'ajaxPHP/suggestion.php?q='+str, true);
                         xhttp.send();   
                     }
+                    
+                    function showDemoteHint(str) {
+                        var xhttp;
+                        //If there is nothing in the search box, the suggestion field is left blank. 
+                        if (str.length == 0) { 
+                            document.getElementById('demoteHint').innerHTML = '';
+                            return;
+                        }
+                        xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                                document.getElementById('demoteHint').innerHTML = xhttp.responseText;
+                            }
+                        }
+                        xhttp.open('GET', 'ajaxPHP/demoteSuggestion.php?q='+str, true);
+                        xhttp.send();   
+                    }
+                    
                     function makeAdmin(str) {
                         var xhttp;
                         //If there is nothing in the search box, just return
@@ -141,9 +176,67 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                         xhttp.send();   
                     }
                     
-                    //The getData function.  This connects to the dataTable.php file to get the data on users searched.
+                    function demoteAdmin(str) {
+                        var xhttp;
+                        //If there is nothing in the search box, just return
+                        if (str.length == 0) { 
+                            return;
+                        }
+                        xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                                if (xhttp.responseText == 'pass') {
+                                    $('#msgD').html('<b>User ' + str + ' has been demoted to a regular user</b>');
+                                }
+                                else if (xhttp.responseText == 'fail') {
+                                    $('#msgD').html('<b>User ' + str + ' is already a regular user.</b>');
+                                }
+                                else {
+                                    $('#msgD').html('<b>User ' + str + ' is a super admin and cannot be demoted.</b>');
+                                }
+                            }
+                        }
+                        xhttp.open('GET', 'ajaxPHP/demoteAdmin.php?d='+str, true);
+                        xhttp.send();   
+                    }
                     
-                    function getData(str) {
+            
+                    
+                    //The getSurveys function.  This searches the database for surveys by a given user
+                    
+                    function getSurveys(str) {
+                        var xhttp;
+                        xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                                
+                                var data = JSON.parse(xhttp.responseText); 
+                                //If no user was found with the given last name, it gives an error message.
+                                if (data.length == 0) {
+                                    document.getElementById('msgDT').innerHTML = '<b>No user with the last name ' + str + ' found.</b><br/><br/>';
+                                }
+                                else {
+                                    
+                                document.getElementById('msgDT').innerHTML = '';
+                                
+                                $('#surveySelect').find('option').remove().end();
+                                for (i = 0; i < data.length; i++) {
+                                    $('#surveySelect').append($('<option>', {
+                                        value: data[i],
+                                        text: data[i]
+                                    }));
+                                    }
+                                
+                                }
+                                    
+                            }
+                        }
+                        xhttp.open('GET', 'ajaxPHP/getSurveys.php?q='+str, true);
+                        xhttp.send();   
+                    }
+                    
+                    
+                    function getData(str, sID) {
                         var xhttp;
                         xhttp = new XMLHttpRequest();
                         xhttp.onreadystatechange = function() {
@@ -178,7 +271,7 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                                     
                             }
                         }
-                        xhttp.open('GET', 'ajaxPHP/dataTable.php?q='+str, true);
+                        xhttp.open('GET', 'ajaxPHP/dataTable.php?i='+sID, true);
                         xhttp.send();   
                     }
                     
@@ -189,10 +282,7 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                 
             });
                     
-            </script>
-            
-            </div>
-            </div>";
+            </script>";
             echo ($promoteUI);
             
         }
@@ -201,9 +291,11 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
 			$dataTableUI = "
                     <br/>
                     User Email:<input type='text' id='teacherData'>
-                    <button onclick='getData(teacherData.value)'>Search</button>
-					
-					<br/><div id='msg'></div>
+                    <select  name='surveySelect' id='surveySelect'>
+                    </select>
+                    <button onclick='getSurveys(teacherData.value)'>Surveys</button>
+                    <button onclick='getData(teacherData.value, surveySelect.value)'>Search</button>
+                    <br/><br/><div id='msgDT'></div>
                     
                     <span id='table'>
                     
@@ -216,9 +308,41 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                     </span>
             
 			<script>
-			//The getData function.  This connects to the dataTable.php file to get the data on users searched.
+			
+                    //The getSurveys function.  This searches the database for surveys by a given user and puts them in a select form     
+                    function getSurveys(str) {
+                        var xhttp;
+                        xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                                
+                                var data = JSON.parse(xhttp.responseText); 
+                                //If no user was found with the given last name, it gives an error message.
+                                if (data.length == 0) {
+                                    document.getElementById('msgDT').innerHTML = '<b>No user with the last name ' + str + ' found.</b><br/><br/>';
+                                }
+                                else {
+                                    
+                                document.getElementById('msgDT').innerHTML = '';
+                                
+                                $('#surveySelect').find('option').remove().end();
+                                for (i = 0; i < data.length; i++) {
+                                    $('#surveySelect').append($('<option>', {
+                                        value: data[i],
+                                        text: data[i]
+                                    }));
+                                    }
+                                
+                                }
+                                    
+                            }
+                        }
+                        xhttp.open('GET', 'ajaxPHP/getSurveys.php?q='+str, true);
+                        xhttp.send();   
+                    }
                     
-                    function getData(str) {
+                    //The getData function.  This searches the database for survey data by surveyID and displays them in a table.
+                    function getData(str, sID) {
                         var xhttp;
                         xhttp = new XMLHttpRequest();
                         xhttp.onreadystatechange = function() {
@@ -253,7 +377,7 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                                     
                             }
                         }
-                        xhttp.open('GET', 'ajaxPHP/dataTable.php?q='+str, true);
+                        xhttp.open('GET', 'ajaxPHP/dataTable.php?i='+sID, true);
                         xhttp.send();   
                     }
 			</script>";

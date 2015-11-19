@@ -135,6 +135,7 @@ if (isset($_POST['submit']))
         //This is used to prevent sql injections.
         $em = mysqli_real_escape_string($con, $em);
         $pw = mysqli_real_escape_string($con, $pw);
+        $pw = password_hash($pw, PASSWORD_BCRYPT);
                     
         //first check if the email already exists in the database
         //$sql = "select count(*) as c from K12_TEACHER where Email = '" . $em. "'";
@@ -162,9 +163,7 @@ if (isset($_POST['submit']))
 
             //$sql = "insert into K12_TEACHER values('', '".$em."', '".$fn."', '".$ln."', '".$s."', '".$e."', '".$b."', '".$pw."', 'no', '".$code."', '3')";  
 
-            $sql = "call K12_TEACHER_INSERTNEWTEACHER('".$em."', '".$fn."', '".$ln."', '".$s."', '".$e."', '".$b."', '".$pw."', 'no', '".$code."');"; // stored procedure, value order below
-            // VALUES (userName, firstName, lastName, school, education, csBackground, loginStatus, pwd, authenticated, regCode  
-
+            $sql = "call K12_TEACHER_INSERTNEWTEACHER('".$em."', '".$fn."', '".$ln."', '".$s."', '".$e."', '".$b."', '".$pw."', 'no', '".$code."');"; // stored procedure
             $result= mysqli_query($con, $sql) or die(mysqli_error($con)); //a non-select statement query will return a result indicating if the 
                         
             if ($result) $msg = "<b>Your information is entered into the database. </b>";
@@ -176,7 +175,7 @@ if (isset($_POST['submit']))
             //If all fields are valid, a random code is generated and emailed to the user's given email.
                     
             $subject = "Email Activation";
-            $body = "Your code is " . $code . "<br /><br />Please finish registration by inputting your code at http://corsair.cs.iupui.edu:20741/studentOutreach/activation.php";
+            $body = "Your code is " . $code . "<br /><br />Please finish registration by inputting your code at http://corsair.cs.iupui.edu:20741/studentOutreach/activation.php?c=".$code;
             $mailer = new Mail();
                     
             if (($mailer->sendMail($em, $fn, $subject, $body))==true){

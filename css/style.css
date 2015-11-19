@@ -57,9 +57,21 @@ a.pull-right {
     
 }
 
-#promoteText {
+#promoteText, #demoteText {
     
     width: 400px;
+    
+}
+
+#teacherData {
+    
+    width: 70%;
+    
+}
+
+#surveySelect {
+    
+    width: 10%;
     
 }
 

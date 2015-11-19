@@ -15,6 +15,7 @@ require_once "inc/dbconnect.php";
                 <?php
 
                     $code = "";
+                    $code = $_GET['c'];
                     $em = "";
                     $pw = "";
                     $msg = "Please type in your login information and the activation code to complete registration.";

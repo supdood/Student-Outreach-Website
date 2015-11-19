@@ -8,20 +8,15 @@ require_once "../ajax/dbconnect.php";
 header('Content-Type: application/json');
 
 // get the q parameter from URL.  This is the text that the user typed into the text box.
-$q = $_REQUEST["q"];
+//$q = $_REQUEST["q"];
+$sID = $_REQUEST["i"];
 
 $match = false;
-$sql = "select ID From K12_TEACHER where Email = '".$q."'";
-$result = $DB->GetAll($sql);
-$id = $result[0][0];
 
-$sql = "select SurveyTypeID From K12_SURVEY where TeacherID = '".$id."'";
+
+$sql = "select SurveyTypeID From K12_SURVEY where ID = '".$sID."'";
 $result = $DB->GetAll($sql);
 $tID = $result[0][0];
-
-$sql = "select ID From K12_SURVEY where TeacherID = '".$id."'";
-$result = $DB->GetAll($sql);
-$sID = $result[0][0];
 
 $sql = "select * From K12_SURVEY_ANSWERS where SurveyID = '".$sID."'";
 $result = $DB->GetAll($sql);
@@ -43,7 +38,10 @@ foreach ($result as $row) {
 }
 
 foreach ($questionIDArray as $index) {
-    $sql = "select Question From K12_POSTSURVEY_QUESTIONS where ID = '".$index."'";
+    if ($tID == 1)
+        $sql = "select Question From K12_PRESURVEY_QUESTIONS where ID = '".$index."'";
+    else
+        $sql = "select Question From K12_POSTSURVEY_QUESTIONS where ID = '".$index."'";
     $result = $DB->GetAll($sql);
     $questionArray[] = $result[0][0];
     
@@ -64,7 +62,7 @@ for($i = 0; $i < count($answerArray); $i++) {
 }
 
 
-$q = strtolower($q);
+//$q = strtolower($q);
 
 //Itterrates through each row in the REGISTRATION
 /*
