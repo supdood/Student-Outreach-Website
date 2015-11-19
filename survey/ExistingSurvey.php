@@ -36,10 +36,12 @@
 		// populate the dropdown box options
 		// $val[0] is SurveyID
 		// $val[1] is ClassID
-		$dropDown .= "<option id='".$val[0]."'value='".$val[0]."'>".$val[1]. " - " .$val[3]. "</option>";
+		$dropDown .= "<option id='".$val[0]."'value='".$val[1]."'>". $val[4] . " - ".$val[3]. "</option>";
 
 		// print "SurveyID:  " . $val[0] . "<br>";
 		// print "ClassID:  " . $val[1]. "<br>";
+		// print "Class Name:  "  .  $val[3] . "<br>";
+		// print "SurveyType  " . $val[4] . "<br>";
 
 		// for($j = 0; $j < count($val); $j++)
 		// {	
@@ -52,9 +54,13 @@
 ?>
 
 <script>
-function getDropdownValue(surveyID)
+function getDropdownValue(classID)
 {
-	var classID = document.getElementById(surveyID).text;
+	alert("ClasID: "+classID);
+	var dropDownBox = document.getElementById("existingSurvey");
+	// alert(dropDownBox.name);
+	var surveyID = dropDownBox.options[dropDownBox.selectedIndex].id;
+	alert("ClassID: "+classID + "  --  SurveyID:  "+ surveyID);
 	var link = "ExistingSurveyLanding.php?surSelect="+surveyID+"&classID="+classID;
 	window.location.assign(link);
 

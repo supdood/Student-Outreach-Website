@@ -183,8 +183,10 @@
         //     Header("location:StartSurvey.php?q=".$countError."&errorType=".$countErrorType);
         // }
 
-        // create new survey in database
-        // $insertSql = "K12_SURVEY_INSERTNEWSURVEY('".$_SESSION["teacherID"]."', '".$_SESSION["classID"]."', '".$_SESSION["lastQuestionAnswered"]."', 'no', 'post'";
+        //TODO: don't allow survey to submit a question/answer if no value is selected
+        // this is causing false answer records in the database currently.
+
+
         $existingSql = "Select LastQuestionAnswered FROM K12_SURVEY WHERE ID = ".$_SESSION["surveyID"]."";
         // print $existingSql . "<br>";
         $existingResult = mysqli_query($conn, $existingSql);
@@ -230,6 +232,7 @@
             // print $insertPrevAnswer;
             if(mysqli_query($conn, $insertPrevAnswer))
             {
+                // $notifications .= $_POST["answer"] . "<br>";
                 $conn->next_result();
 
                 // print "<br> answer successfully stored";
@@ -292,9 +295,11 @@
     // }
 
     $ans = "";
+    $i = 0;
     while($ans = mysqli_fetch_array($answerResult))
     {
-        $answerHTML .= "<input type='radio' value='".$ans[0]."'' name='answer'>"."&nbsp".$ans[0]."</input>&nbsp&nbsp&nbsp&nbsp";
+        $answerHTML .= "<input type='radio' value='".$i."'' name='answer'>"."&nbsp".$ans[0]."</input>&nbsp&nbsp&nbsp&nbsp";
+        $i++;
     }
 
     mysqli_free_result($answerResult);

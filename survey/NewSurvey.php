@@ -60,7 +60,8 @@
 		$dropDown = "<select name='existingClasses' id='existingClasses'>";
 		while($val = mysqli_fetch_array($getTeacherClassesResult))
 		{
-			$dropDown .= "<option id='".$val[0]."'value='".$val[0]."'>".$val[0]. " - ".$val[1]."</option>";
+			// TODO: obtain the survey type description from the database to notify user which type of survey
+			$dropDown .= "<option id='".$val[0]."'value='".$val[0]."'>".$val[1]."</option>";
 		}
 		$dropDown .= "</select>";
 	}
