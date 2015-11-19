@@ -245,14 +245,14 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                                 var data = JSON.parse(xhttp.responseText); 
                                 //If no user was found with the given last name, it gives an error message.
                                 if (data.length == 0) {
-                                    document.getElementById('msg').innerHTML = '<b>No user with the last name ' + str + ' found.</b><br/><br/>';
+                                    document.getElementById('msgDT').innerHTML = '<b>No user with the last name ' + str + ' found.</b><br/><br/>';
                                     
                                     //clear the table 
                                     $('#data').DataTable().clear().draw();
                                 }
                                 else {
                                     
-                                document.getElementById('msg').innerHTML = '';    
+                                document.getElementById('msgDT').innerHTML = '';    
                                     
                                 //clear the table before new rows are added
                                 $('#data').DataTable().clear().draw();
@@ -290,10 +290,9 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
 			
 			$dataTableUI = "
                     <br/>
-                    User Email:<input type='text' id='teacherData'>
-                    <select  name='surveySelect' id='surveySelect'>
+                    User Email:<input type='text' id='teacherData' onkeyup='getSurveys(this.value)'>
+                    Survey ID:<br/><select  name='surveySelect' id='surveySelect'>
                     </select>
-                    <button onclick='getSurveys(teacherData.value)'>Surveys</button>
                     <button onclick='getData(teacherData.value, surveySelect.value)'>Search</button>
                     <br/><br/><div id='msgDT'></div>
                     
@@ -309,7 +308,6 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
             
 			<script>
 			
-                    //The getSurveys function.  This searches the database for surveys by a given user and puts them in a select form     
                     function getSurveys(str) {
                         var xhttp;
                         xhttp = new XMLHttpRequest();
@@ -341,7 +339,7 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                         xhttp.send();   
                     }
                     
-                    //The getData function.  This searches the database for survey data by surveyID and displays them in a table.
+                    
                     function getData(str, sID) {
                         var xhttp;
                         xhttp = new XMLHttpRequest();
@@ -351,14 +349,14 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                                 var data = JSON.parse(xhttp.responseText); 
                                 //If no user was found with the given last name, it gives an error message.
                                 if (data.length == 0) {
-                                    document.getElementById('msg').innerHTML = '<b>No user with the last name ' + str + ' found.</b><br/><br/>';
+                                    document.getElementById('msgDT').innerHTML = '<b>No user with the last name ' + str + ' found.</b><br/><br/>';
                                     
                                     //clear the table 
                                     $('#data').DataTable().clear().draw();
                                 }
                                 else {
                                     
-                                document.getElementById('msg').innerHTML = '';    
+                                document.getElementById('msgDT').innerHTML = '';    
                                     
                                 //clear the table before new rows are added
                                 $('#data').DataTable().clear().draw();
