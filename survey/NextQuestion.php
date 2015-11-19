@@ -295,7 +295,7 @@
     // }
 
     $ans = "";
-    $i = 0;
+    $i = 1;
     while($ans = mysqli_fetch_array($answerResult))
     {
         $answerHTML .= "<input type='radio' value='".$i."'' name='answer'>"."&nbsp".$ans[0]."</input>&nbsp&nbsp&nbsp&nbsp";
