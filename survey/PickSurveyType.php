@@ -16,7 +16,7 @@
 	// initialize error variable
 	$errorMsg = "";
 	
-	$postSurveyAvail = $_GET["postSurveyAvail"];
+	if(isset($_GET["postSurveyAvail"])) $postSurveyAvail = $_GET["postSurveyAvail"];
 
 
 

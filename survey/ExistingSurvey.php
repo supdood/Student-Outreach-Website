@@ -38,8 +38,8 @@
 		// $val[1] is ClassID
 		$dropDown .= "<option id='".$val[0]."'value='".$val[0]."'>".$val[1]."</option>";
 
-		print "SurveyID:  " . $val[0] . "<br>";
-		print "ClassID:  " . $val[1]. "<br>";
+		// print "SurveyID:  " . $val[0] . "<br>";
+		// print "ClassID:  " . $val[1]. "<br>";
 
 		// for($j = 0; $j < count($val); $j++)
 		// {	

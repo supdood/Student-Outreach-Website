@@ -22,8 +22,8 @@
 
 	// pass dropdown selection value to session variable
 	// surSelect is the selected dropdown option's value -- which is the SurveyID of the selected survey
-	$_SESSION["surveyID"] = $_GET["surSelect"];
-	$_SESSION["classID"] = $_GET["classID"];
+	if(isset($_GET["surSelect"])) $_SESSION["surveyID"] = $_GET["surSelect"];
+	if(isset($_GET["classID"])) $_SESSION["classID"] = $_GET["classID"];
 
 	// print $_SESSION["surveyID"];
 	// print $_SESSION["classID"];

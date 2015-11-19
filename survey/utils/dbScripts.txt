@@ -9,8 +9,8 @@ INSERT INTO  `nelson8_db`.`K12_CLASS` (`ID` ,`Name` ,`Description`) VALUES (NULL
 
 
 Drop procedure if exists K12_SURVEY_INSERTNEWSURVEY;
-Create Procedure K12_SURVEY_INSERTNEWSURVEY(IN teacherID INT(15), IN classID INT(15), IN lastQuestionAnswered INT(3), IN completed VARCHAR(3),  IN surveyType INT(1))
-INSERT INTO `nelson8_db`.`K12_SURVEY` (`ID`, `TeacherID`, `ClassID`, `StartTime`, `EndTime`, `LastQuestionAnswered`, `Completed`, `SurveyTypeID`) VALUES (NULL, teacherID, classID, 'CURRENT_TIMESTAMP', NULL, '1', completed, surveyType);
+Create Procedure K12_SURVEY_INSERTNEWSURVEY(IN teacherID INT(15), IN classID INT(15), IN completed VARCHAR(3),  IN surveyTypeID INT(1))
+INSERT INTO `nelson8_db`.`K12_SURVEY` (`ID`, `TeacherID`, `ClassID`, `StartTime`, `EndTime`, `LastQuestionAnswered`, `Completed`, `SurveyTypeID`) VALUES (NULL, teacherID, classID, 'CURRENT_TIMESTAMP', NULL, '1', completed, surveyTypeID);
 
 Drop procedure if exists K12_SURVEY_TEACHER_INCOMPLETESURVEY;
 Create Procedure K12_SURVEY_TEACHER_INCOMPLETESURVEY(IN email VARCHAR(50))
@@ -75,8 +75,8 @@ Create Procedure K12_LICHERT_ANSWERS_GETANSWERS()
 SELECT Description FROM K12_LICHERT_ANSWERS ORDER BY K12_LICHERT_ANSWERS.ID ASC;
 
 Drop procedure if exists K12_TEACHER_INSERTNEWTEACHER;
-Create Procedure K12_TEACHER_INSERTNEWTEACHER(IN email VARCHAR(50), IN firstName VARCHAR(30), IN lastName VARCHAR(30), IN school VARCHAR(40), IN education TEXT, IN csBackground TEXT, IN loginStatus BOOL, IN pwd VARCHAR(30), IN authenticated VARCHAR(30), IN regCode VARCHAR(50))
-insert into K12_TEACHER values(email, firstName, lastName, school, education,csBackground, loginStatus, pwd, authenticated, regCode, 3);
+Create Procedure K12_TEACHER_INSERTNEWTEACHER(IN email VARCHAR(50), IN firstName VARCHAR(30), IN lastName VARCHAR(30), IN school VARCHAR(40), IN education TEXT, IN csBackground TEXT, IN pwd VARCHAR(30), IN authenticated VARCHAR(30), IN regCode VARCHAR(50))
+insert into K12_TEACHER values(null, email, firstName, lastName, school, education, csBackground, pwd, authenticated, regCode, 3);
 
 Drop procedure if exists K12_TEACHER_PROMOTETEACHERACCESS;
 Create Procedure K12_TEACHER_PROMOTETEACHERACCESS(IN email VARCHAR(50))
@@ -93,6 +93,8 @@ SELECT `ID`, `Email`, `FirstName`, `LastName`, `School`, `Education`, `CSBackgro
 Drop procedure if exists K12_CLASS_GETALL;
 Create Procedure K12_CLASS_GETALL()
 SELECT * FROM `K12_CLASS`;
+
+Drop procedure if exists K12_CLASS_GETCLASSES
 
 Drop procedure if exists K12_PRESURVEY_QUESTIONS_GETQUESTIONAT;
 Create Procedure K12_PRESURVEY_QUESTIONS_GETQUESTIONAT(IN qIndex INT(5))
