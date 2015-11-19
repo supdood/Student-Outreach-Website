@@ -5,6 +5,10 @@
     include "utils/authenticationIncludes.php";
 ?>
 
+<style type="text/css">
+
+</style>
+
 <?php
     if(isset($_POST["btnStartPreSurvey"]))
     {   
@@ -298,8 +302,17 @@
     $i = 1;
     while($ans = mysqli_fetch_array($answerResult))
     {
-        $answerHTML .= "<input type='radio' value='".$i."'' name='answer'>"."&nbsp".$ans[0]."</input>&nbsp&nbsp&nbsp&nbsp";
-        $i++;
+        if($i == 6)
+        {
+            $answerHTML .= "<input type='radio' value='".$i."'' name='answer' checked>"."&nbsp".$ans[0]."</input>&nbsp&nbsp&nbsp&nbsp";    
+            $i++;
+        }
+        else
+        {
+            $answerHTML .= "<input type='radio' value='".$i."'' name='answer'>"."&nbsp".$ans[0]."</input>&nbsp&nbsp&nbsp&nbsp";
+            $i++;    
+        }
+        
     }
 
     mysqli_free_result($answerResult);
@@ -315,7 +328,7 @@
     
     <form action="NextQuestion.php" method="post">
         <h2> <?php   print $questionHTML ?> </h2>
-        <h3> <?php  print $answerHTML  ?>  </h3>
+        <p> <?php  print $answerHTML  ?>  </p>
         
         <button type="submit" name="enter">Submit Survey</button>
     </form>
