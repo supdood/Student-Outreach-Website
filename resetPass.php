@@ -55,12 +55,10 @@ require_once "inc/dbconnect.php";
                             
                             //Change the pw
                         
-                            $code = mysqli_real_escape_string($con, $code);
                             $pw = mysqli_real_escape_string($con, $pw);
                             $pw = password_hash($pw, PASSWORD_BCRYPT);
 
                             $sql = "UPDATE K12_TEACHER SET Password = '" .$pw. "' WHERE Password = '" .$code. "'";
-                            echo $pw;
                         
                             $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
                             
