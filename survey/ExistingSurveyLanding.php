@@ -25,8 +25,19 @@
 	if(isset($_GET["surSelect"])) $_SESSION["surveyID"] = $_GET["surSelect"];
 	if(isset($_GET["classID"])) $_SESSION["classID"] = $_GET["classID"];
 
-	// print $_SESSION["surveyID"];
-	// print $_SESSION["classID"];
+	// need to get the surveyTypeID
+	$surveyTypeSql = "Select SurveyTypeID FROM K12_SURVEY WHERE ID='".$_SESSION["surveyID"]."'";
+	$surveyTypeResult = mysqli_query($conn, $surveyTypeSql);
+	$surveyTypeField = mysqli_fetch_array($surveyTypeResult);
+	if(count($surveyTypeField != 0))
+    {
+        // set session variable
+        $_SESSION["surveyType"] = $surveyTypeField[0];
+    }
+
+    mysqli_free_result($surveyTypeResult);
+    $conn->next_result();
+
 ?>
 
 

@@ -15,7 +15,7 @@
 	// Next check to see if a Pre survey has been yet taken for this classID,
 	// if no Pre survey taken, teacher is not allowed to take post survey (until pre survey for class has been submitted)
 	
-	$preSurveyTakenForClassIDSql = "SELECT count(*) FROM K12_SURVEY WHERE ClassID = '".$_SESSION["classID"]."' AND SurveyTypeID = '1'";
+	$preSurveyTakenForClassIDSql = "SELECT count(*) as c FROM K12_SURVEY WHERE ClassID = '".$_SESSION["classID"]."' AND SurveyTypeID = '1'";
 	$preSurveyTakenForClassIDResult = mysqli_query($conn, $preSurveyTakenForClassIDSql);
 	$preSurveyTakenField = mysqli_fetch_array($preSurveyTakenForClassIDResult);
 	// initialize count variable
@@ -28,6 +28,10 @@
 	{
 		$postSurveyAvail = true;
 	}
+
+	mysqli_free_result($preSurveyTakenForClassIDResult);
+	$conn->next_result();
+
 
 	Header("location:PickSurveyType.php?postSurveyAvail=".$postSurveyAvail);
 

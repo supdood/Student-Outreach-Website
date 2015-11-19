@@ -52,7 +52,8 @@
         // since teacherID found, get incomplete surveys
         $sqlIncompleteSurvey = "";
 		//TODO: include class name in the incompleteSurvey sql statement/array to include more info for the user
-        $sqlIncompleteSurvey = "SELECT ID as SurveyID, ClassID, LastQuestionAnswered FROM K12_SURVEY WHERE Completed = 'no' AND TeacherID = '" . $teacherID."'";
+        // $sqlIncompleteSurvey = "SELECT ID as SurveyID, ClassID, LastQuestionAnswered FROM K12_SURVEY WHERE Completed = 'no' AND TeacherID = '" . $teacherID."'";
+        $sqlIncompleteSurvey = "SELECT s.ID AS SurveyID, s.ClassID, s.LastQuestionAnswered, c.Name FROM K12_SURVEY AS s, K12_CLASS AS c WHERE s.ClassID = c.ID AND Completed =  'no' AND TeacherID ='".$teacherID."'";
         //print $sqlIncompleteSurvey;
         $incompleteSurveyResult = mysqli_query($conn, $sqlIncompleteSurvey) or die(mysql_error());
         if(!$incompleteSurveyResult)
@@ -73,7 +74,7 @@
             {   
                 $surveyInfoArray = array();
                 // print "<br>". count($row) . "<br>row[0]: " . $row[0] . "<br>row[1]: " . $row[1] . "<br>row[3]: " . $row[2];
-                for($j = 0; $j < 3; $j++)
+                for($j = 0; $j < 4; $j++)
                 {
                     $surveyInfoArray[$j] = $row[$j];
                 }
@@ -81,6 +82,9 @@
                 $i++;
             }
             //print_r($_SESSION["incompleteSurveys"][0]);
+
+            mysqli_free_result($incompleteSurveyResult);
+            $conn->next_result();
         }
     }  
 

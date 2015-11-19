@@ -11,7 +11,7 @@
 	}
 	div
 	{
-		width: 30%;
+		width: 50%;
 		text-align: center;
 		margin: 0 auto;
 	}
@@ -36,7 +36,7 @@
 		// populate the dropdown box options
 		// $val[0] is SurveyID
 		// $val[1] is ClassID
-		$dropDown .= "<option id='".$val[0]."'value='".$val[0]."'>".$val[1]."</option>";
+		$dropDown .= "<option id='".$val[0]."'value='".$val[0]."'>".$val[1]. " - " .$val[3]. "</option>";
 
 		// print "SurveyID:  " . $val[0] . "<br>";
 		// print "ClassID:  " . $val[1]. "<br>";

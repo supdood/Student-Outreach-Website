@@ -10,6 +10,10 @@
 		text-align: center;
 		margin: 0 auto;
 	}
+	button
+	{
+		width: 20%;
+	}
 </style>
 
 <?php
@@ -26,7 +30,7 @@
 
 <div class="row">
 	<span>  <?php  print $errorMsg  ?>  </span>
-	<label style="margin:2">Select a type of survey: </label>
+	<h2 style="margin:2">Select a type of survey: </h2>
 	<form action="PreSurveyLanding.php" method="post" name="PreSurveyChoice">
 		<button name="btnPreSurvey">PreSurvey</button>
 	</form>

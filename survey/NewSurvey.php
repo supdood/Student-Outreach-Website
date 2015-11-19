@@ -51,7 +51,8 @@
 
 	// get teachers existing classes
 	
-	$getTeacherClassesSql = "Select ClassID FROM K12_TEACHER_CLASS Where TeacherID =" . $teacherID;
+	// $getTeacherClassesSql = "Select ClassID FROM K12_TEACHER_CLASS Where TeacherID =" . $teacherID;
+	$getTeacherClassesSql = "Select tc.ClassID, c.Name FROM K12_TEACHER_CLASS as tc, K12_CLASS as c Where tc.ClassID = c.ID AND tc.TeacherID = ".$teacherID;
 	$getTeacherClassesResult = mysqli_query($conn, $getTeacherClassesSql);
 
 	if($getTeacherClassesResult)
@@ -59,7 +60,7 @@
 		$dropDown = "<select name='existingClasses' id='existingClasses'>";
 		while($val = mysqli_fetch_array($getTeacherClassesResult))
 		{
-			$dropDown .= "<option id='".$val[0]."'value='".$val[0]."'>".$val[0]."</option>";
+			$dropDown .= "<option id='".$val[0]."'value='".$val[0]."'>".$val[0]. " - ".$val[1]."</option>";
 		}
 		$dropDown .= "</select>";
 	}
