@@ -11,6 +11,8 @@ header('Content-Type: application/json');
 //$q = $_REQUEST["q"];
 $sID = $_REQUEST["i"];
 
+$sID = mysqli_real_escape_string($con, $sID);
+
 $match = false;
 
 

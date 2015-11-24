@@ -8,7 +8,7 @@ $(document).ready(function(){
 
 function nameField() {
     
-    $('#nameArea').html("<br/>First Name:<input type='text' id='fnField' value=" + $('#firstName').text() + ">Last Name:<input type='text' id='lnField' value=" + $('#lastName').text() + "></input><button id='bName' onclick='updateName(fnField.value, lnField.value)'>Save Changes</button>");
+    $('#nameArea').html("<br/>First Name:<input type='text' id='fnField' value='" + $('#firstName').text() + "'>Last Name:<input type='text' id='lnField' value=" + $('#lastName').text() + "></input><button id='bName' onclick='updateName(fnField.value, lnField.value)'>Save Changes</button>");
     
     $('#firstName').html("");
     $('#lastName').html("");
@@ -17,7 +17,7 @@ function nameField() {
 
 function schoolField() {
     
-    $('#schoolArea').html("<input type='text' id='sField' value=" + $('#school').text() + "></input><button id='sName' onclick='updateSchool(sField.value)'>Save Changes</button>");
+    $('#schoolArea').html("<input type='text' id='sField' value='" + $('#school').text() + "'></input><button id='sName' onclick='updateSchool(sField.value)'>Save Changes</button>");
     
     $('#school').html("");
     

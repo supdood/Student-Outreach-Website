@@ -10,6 +10,8 @@ header('Content-Type: application/json');
 // get the q parameter from URL.  This is the text that the user typed into the text box.
 $q = $_REQUEST["q"];
 
+$q = mysqli_real_escape_string($con, $q);
+
 $match = false;
 $sql = "select ID From K12_TEACHER where Email = '".$q."'";
 $result = $DB->GetAll($sql);

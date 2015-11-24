@@ -13,6 +13,8 @@ require_once "../ajax/dbconnect.php";
 // get the q parameter from URL.  This is the text typed into the text box.
 $q = $_REQUEST["q"];
 
+$q = mysqli_real_escape_string($con, $q);
+
 $hint = "";
 
 $sql = "select Email From K12_TEACHER where AccessLevel = 3";
