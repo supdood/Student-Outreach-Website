@@ -11,6 +11,8 @@
 include ("adodb.inc.php");
 include ("adodb-exceptions.inc.php");
 
+$con = mysqli_connect("localhost","nelson8","nelson8","nelson8_db");
+
 $DB = NewADOConnection("mysql");
 
 $DB->Connect("localhost", "nelson8", "nelson8","nelson8_db");
