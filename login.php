@@ -108,6 +108,23 @@ if (isset($_SESSION['email'])) {
                         $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
                         $access = mysqli_fetch_array($result);
                         $_SESSION['access'] = $access[0];
+
+                        $sqlTeacherID = "SELECT ID FROM K12_TEACHER WHERE Email = '".$_SESSION["email"] ."'";
+                        $teacherIDResult = mysqli_query($conn, $sqlTeacherID) or die(mysql_error());
+
+                        // Ensure that teacherID is retrieved
+                        if(!$teacherIDResult) 
+                        {
+                            $errorMsg .= "Error retrieveing ID.<br>";
+                        }
+                        else
+                        {
+                            $teacherIDField = mysqli_fetch_array($teacherIDResult); //the query results are objects, in this case, one object
+                            $teacherID = $teacherIDField[0];
+                            // print $teacherID;
+
+                            // create session variable for ID
+                            $_SESSION["teacherID"] = $teacherID;
                         
                         
                     }

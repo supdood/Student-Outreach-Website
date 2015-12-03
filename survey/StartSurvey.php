@@ -31,29 +31,31 @@
     
     // check for incomplete surveys
     // first get teacherID
-    $sqlTeacherID = "SELECT ID FROM K12_TEACHER WHERE Email = '".$_SESSION["email"] ."'";
-    // print $sqlTeacherID;
-    $teacherIDResult = mysqli_query($conn, $sqlTeacherID) or die(mysql_error());
+    // $sqlTeacherID = "SELECT ID FROM K12_TEACHER WHERE Email = '".$_SESSION["email"] ."'";
+    // // print $sqlTeacherID;
+    // $teacherIDResult = mysqli_query($conn, $sqlTeacherID) or die(mysql_error());
 
 	// Ensure that teacherID is retrieved
-    if(!$teacherIDResult) 
+    if($_SESSION["teacherID"] == "") 
     {
+        // this code block should never be reached since the Surveys are only
+        // accessible by teachers that are logged-in
         $errorMsg .= "Error retrieveing ID.<br>";
     }
     else
     {
-        $teacherIDField = mysqli_fetch_array($teacherIDResult); //the query results are objects, in this case, one object
-        $teacherID = $teacherIDField[0];
-        // print $teacherID;
+        // $teacherIDField = mysqli_fetch_array($teacherIDResult); //the query results are objects, in this case, one object
+        // $teacherID = $teacherIDField[0];
+        // // print $teacherID;
 
-        // create session variable for ID
-        $_SESSION["teacherID"] = $teacherID;
+        // // create session variable for ID
+        // $_SESSION["teacherID"] = $teacherID;
 
         // since teacherID found, get incomplete surveys
         $sqlIncompleteSurvey = "";
 		//TODO: include class name in the incompleteSurvey sql statement/array to include more info for the user
         // $sqlIncompleteSurvey = "SELECT ID as SurveyID, ClassID, LastQuestionAnswered FROM K12_SURVEY WHERE Completed = 'no' AND TeacherID = '" . $teacherID."'";
-        $sqlIncompleteSurvey = "SELECT s.ID AS SurveyID, s.ClassID, s.LastQuestionAnswered, c.Name, st.Description FROM K12_SURVEY AS s, K12_CLASS AS c, K12_SURVEYTYPE as st WHERE s.ClassID = c.ID AND Completed =  'no' AND s.SurveyTypeID = st.ID AND TeacherID ='".$teacherID."'";
+        $sqlIncompleteSurvey = "SELECT s.ID AS SurveyID, s.ClassID, s.LastQuestionAnswered, c.Name, st.Description FROM K12_SURVEY AS s, K12_CLASS AS c, K12_SURVEYTYPE as st WHERE s.ClassID = c.ID AND Completed =  'no' AND s.SurveyTypeID = st.ID AND TeacherID ='".$_SESSION["teacherID"]."'";
 //         SELECT s.ID AS SurveyID, s.ClassID, s.LastQuestionAnswered, c.Name, st.Description 
 // FROM K12_SURVEY AS s, K12_CLASS AS c, K12_SURVEYTYPE as st
 // WHERE s.ClassID = c.ID AND Completed =  'no' AND TeacherID = 5 AND s.SurveyTypeID = st.ID
