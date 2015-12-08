@@ -43,8 +43,8 @@ Create Procedure K12_TEACHER_AUTHENTICATE(IN userName VARCHAR(50), IN regCode VA
 UPDATE K12_TEACHER SET Authenticated = 'yes' WHERE Email = userName and RegistrationCode = regCode;
 
 Drop procedure if exists K12_EVENTS_INSERTEVENT;
-Create Procedure K12_EVENTS_INSERTEVENT(IN title VARCHAR(50), IN startDate VARCHAR(19), IN endDate VARCHAR(19), IN teacherID INT(15), IN eventID VARCHAR(25))
-insert into K12_EVENTS values(title, startDate, endDate, teacherID, eventID);
+Create Procedure K12_EVENTS_INSERTEVENT(IN title VARCHAR(50), IN startDate VARCHAR(19), IN endDate VARCHAR(19), IN teacherID INT(15), IN eventID VARCHAR(25), IN description TEXT)
+insert into K12_EVENTS values(title, startDate, endDate, teacherID, eventID, description);
 
 Drop procedure if exists K12_EVENTS_GETEVENTS;
 Create Procedure K12_EVENTS_GETEVENTS()

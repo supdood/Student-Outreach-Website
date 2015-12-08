@@ -30,13 +30,13 @@ if (!isset($_SESSION['email']))
 		<form action="csvTeacherInfo.php" method="post">
 			<tr>
 				<td style="text-align:center"><label>Download Teacher Info</label></td>
-				<td style="text-align:center"><button name="btnCSVTeacherInfo">Get</button></td>
+				<td style="text-align:center"><button name="btnCSVTeacherInfo">Download</button></td>
 			</tr>
 		</form>
 		<form action="csvClassInfo.php" method="post">
 			<tr>
 				<td style="text-align:center"><label>Download Class Info</label></td>
-				<td style="text-align:center"><button name="btnCSVClassInfo">Get</button></td>
+				<td style="text-align:center"><button name="btnCSVClassInfo">Download</button></td>
 			</tr>
 		</form>
 </div>

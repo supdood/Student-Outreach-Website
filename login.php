@@ -129,9 +129,7 @@ if (isset($_SESSION['email'])) {
                         
                     }
 				    else $msg = "<br/><b>The information entered does not match with the records in our database.</b>";
-                    
-                    
-                    
+
                 }
             }
 		?>
