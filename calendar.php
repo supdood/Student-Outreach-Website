@@ -34,11 +34,14 @@
                 $sql = "select * From K12_EVENTS";
                 //$sql = "call K12_EVENTS_GETEVENTS()";   // use stored procedure
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
-   
 
                 while($row = mysqli_fetch_array($result))
                 {
-                    $output = "{title:'" . $row['Title'] . "', start: '" . $row['StartDate'];
+                    $t = $row['Title'];
+                    $t = str_replace("\\", "\\\\", $t);
+                    $t = str_replace("'", "\'", $t);
+                    
+                    $output = "{title:'" . $t . "', start: '" . $row['StartDate'] . "', url: 'http://corsair.cs.iupui.edu:20741/studentOutreach/eventDetails.php?q=" . $row['EventID'];
                     if($row['EndDate'] != '')
                         $output = $output . "', end: '" . $row['EndDate'] . "'},";
                     else
@@ -54,7 +57,6 @@
 	});
 
 </script>
-
 
 
 

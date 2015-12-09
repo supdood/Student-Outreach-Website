@@ -3,14 +3,11 @@
 include "header.php";
 require_once "inc/dbconnect.php";
 require_once "inc/util.php";
-
 if (!isset($_SESSION['email'])) {
     header ('Location: login.php');
 }
 else {
-
    //$sql = "select Authenticated From K12_TEACHER WHERE Email = '" .$_SESSION['email']."'";
-
     $sql = "call K12_TEACHER_AUTHENTICATED('" .$_SESSION['email']."')"; 
     $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
     $activated = mysqli_fetch_array($result);
@@ -22,14 +19,12 @@ else {
     if ($activated[0] == 'no')
     Header ("Location:activation.php") ;
 }
-
 ?>
 
 <script src="js/fillDays.js"></script>
 
 
 <?php
-
 $msg = "";
 $t="";
 $m="";
@@ -45,7 +40,6 @@ $sampm="";
 $eampm="";
 $st="";
 $et="";
-
 //runs if the enter button is pressed
 if (isset($_POST['addEvent']))
 {	            
@@ -103,39 +97,28 @@ if (isset($_POST['addEvent']))
     
     $endDate= $date . "T" . $et . ":00";
     $date= $date . "T" . $st . ":00";
-
-
     $code = randomCodeGenerator(25);
-
-    //$sql = "insert into K12_EVENTS values('".$t."', '".$date."', '".$endDate."', '0', '".$code."')";  
-    $sql = "call K12_EVENTS_INSERTEVENT('".$t."', '".$date."', '".$endDate."', '0', '".$code."')";   // will need the teacherID from database for this call, also may want to use an autoincrement value for the eventID rather than randomly generated code  
-
+    
+    $sql = "select ID From K12_TEACHER where Email = '".$_SESSION['email']."'";
+    $result= mysqli_query($con, $sql) or die(mysqli_error($con));
+    $tid = mysqli_fetch_array($result);
+    
+	 
+    $sql = "call K12_EVENTS_INSERTEVENT('".$t."', '".$date."', '".$endDate."', '".$tid[0]."', '".$code."', '')";   // may want to use an autoincrement value for the eventID rather than randomly generated code  
     $result= mysqli_query($con, $sql) or die(mysqli_error($con)); //a non-select statement query will return a result indicating if the 
     if ($result) $msg = "<b>Your information is entered into the database. </b>";
     
 }
-
 				
-
-
-
-
-
-
-
-
 ?>
 
 
 <style>
-
     input[type="text"] {
         
         display:inline;
         
     }
-
-
 </style>
 
 
