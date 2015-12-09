@@ -124,6 +124,9 @@
         // intiialize the notifications variable
         $notifications = "";
 
+        //flag for entering exisiting survey
+        $reEnter = true;
+
         // get surveyType of existing survey
         if($_SESSION["surveyType"] == "")
         {
@@ -219,10 +222,18 @@
     // captures the answers to the questions as they are submitted
     if(isset($_POST["enter"]))
     {
+        if(!isset($reEnter)) $reEnter = false;
         $notifications = "";
         $surveyID = $_SESSION["surveyID"];
+        
         // increment lastQuestionAsked
-        $_SESSION["lastQuestionAnswered"]++;
+        // if not 
+        if (!$reEnter)
+        {
+            $_SESSION["lastQuestionAnswered"]++;    
+        }
+        $reEnter = false;
+        
         $previousQuestionIndx = $_SESSION["lastQuestionAnswered"] - 1;
 
 
