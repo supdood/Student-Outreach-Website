@@ -22,6 +22,9 @@ else {
 ?>
 
 <script src="js/fillDays.js"></script>
+<script src="quill/quill.js"></script>
+<link rel="stylesheet" type="text/css" href="quill/examples/styles/style.css">
+
 
 <?php
 $msg = "";
@@ -141,7 +144,7 @@ if (isset($_POST['addEvent']))
     <div class="form-group">
     
         Event Title:<input type="text" maxlength="50" name="title"><br/>
-        Date:
+        Date:  
         <select  name = "month" id="formMonths">
                 <option value = "01" selected>January</option>
                 <option value = "02">February</option>
@@ -219,11 +222,29 @@ if (isset($_POST['addEvent']))
   				<option value = "PM">P.M.</option>
         </select> 
         <br/>
-        Description:
-
-        <textarea rows="4" cols="50" name="description">
-        </textarea>
-        
+        <h3>Description:</h3>
+<div id="content-container">
+      <div id="editor-wrapper">
+        <div id="formatting-container">
+          <button title="Bold" class="ql-format-button ql-bold">Bold</button>
+          <button title="Italic" class="ql-format-button ql-italic">Italic</button>
+          <button title="Underline" class="ql-format-button ql-underline">Under</button>
+          <button title="Strikethrough" class="ql-format-button ql-strike">Strike</button>
+          <button title="Link" class="ql-format-button ql-link">Link</button>
+          <button title="Image" class="ql-format-button ql-image">Image</button>
+          <button title="Bullet" class="ql-format-button ql-bullet">Bullet</button>
+          <button title="List" class="ql-format-button ql-list">List</button>
+        </div>
+        <div id="description" name="description"></div>
+      </div>
+    </div>
+    <script type="text/javascript" src="quill/quill.js"></script>
+    <script type="text/javascript">
+     var basicEditor = new Quill('#description');
+basicEditor.addModule('toolbar', {
+  container: '#basic-toolbar'
+});
+    </script>
         
         <br/><button name="addEvent">Add Event</button>
     

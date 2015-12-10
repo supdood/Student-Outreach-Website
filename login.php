@@ -2,15 +2,12 @@
 include "header.php";
 require_once "inc/util.php";
 require_once "inc/dbconnect.php";
-
 $msg = "";
-
 if (isset($_SESSION['email'])) {
     unset($_SESSION['email']);
     session_destroy();
     $msg = "You have been successfully logged out. <br />";
 }
-
 ?>
 
 <?php
@@ -19,13 +16,11 @@ if (isset($_SESSION['email'])) {
 			$pw = "";
             $userE = "";
             $userP = "";
-
             if (!isset($_SESSION["attempts"]))
                 $_SESSION["attempts"] = 0;
             
             //A variable that verifies if all fields are filled in correctly.  Defaults to true but becomes false if any pass fails.
             $fields = true;
-
 			
 			
 			//runs if the enter button is pressed
@@ -42,9 +37,7 @@ if (isset($_SESSION['email'])) {
 				
                 if (isset($_POST['email']))
 					$em = trim($_POST['email']);
-
 				
-
 				//various error messages for each field.  The user will only be directed to the next page if all fields pass these test.
                 //Also, the user is allowed to fail 3 times before he/she is locked out.  
                 //Incorrect login info only counts towards this if it is in a valid format.
@@ -73,10 +66,8 @@ if (isset($_SESSION['email'])) {
                     
                     $em = mysqli_real_escape_string($con, $em);
                     $pw = mysqli_real_escape_string($con, $pw);
-
 				    //$sql = "select Password From K12_TEACHER where Email = '" . $em. "'";
                     $sql = "call K12_TEACHER_GETPASSWORD('".$em."');";  // use stored procedure
-
 				    $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
 				    $field = mysqli_fetch_array($result);
                     
@@ -91,10 +82,8 @@ if (isset($_SESSION['email'])) {
                     
 				    if ($match == true) {
 						  
-
                         $sql = "select Authenticated From K12_TEACHER WHERE Email = '" .$em. "'";
                         //$sql = "call K12_TEACHER_GETAUTHENTICATED_USERNAME_PASSWORD('".$em."', '".$pw."');"; // use stored procedure
-
                         $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
                         $activated = mysqli_fetch_array($result);
                         if ($activated[0] == 'yes')
@@ -108,28 +97,15 @@ if (isset($_SESSION['email'])) {
                         $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
                         $access = mysqli_fetch_array($result);
                         $_SESSION['access'] = $access[0];
-
-                        $sqlTeacherID = "SELECT ID FROM K12_TEACHER WHERE Email = '".$_SESSION["email"] ."'";
-                        $teacherIDResult = mysqli_query($conn, $sqlTeacherID) or die(mysql_error());
-
-                        // Ensure that teacherID is retrieved
-                        if(!$teacherIDResult) 
-                        {
-                            $errorMsg .= "Error retrieveing ID.<br>";
-                        }
-                        else
-                        {
-                            $teacherIDField = mysqli_fetch_array($teacherIDResult); //the query results are objects, in this case, one object
-                            $teacherID = $teacherIDField[0];
-                            // print $teacherID;
-
-                            // create session variable for ID
-                            $_SESSION["teacherID"] = $teacherID;
+                        
+                        $sql = "SELECT ID FROM K12_TEACHER WHERE Email = '".$em."'";
+                        $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
+                        $tID = mysqli_fetch_array($result);
+                        $_SESSION['teacherID'] = $tID[0];
                         
                         
                     }
 				    else $msg = "<br/><b>The information entered does not match with the records in our database.</b>";
-
                 }
             }
 		?>

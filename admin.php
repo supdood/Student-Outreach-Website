@@ -245,7 +245,7 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                                 var data = JSON.parse(xhttp.responseText); 
                                 //If no user was found with the given last name, it gives an error message.
                                 if (data.length == 0) {
-                                    document.getElementById('msgDT').innerHTML = '<b>No user with the last name ' + str + ' found.</b><br/><br/>';
+                                    document.getElementById('msgDT').innerHTML = '<b>This survey has no answered questions.</b><br/><br/>';
                                     
                                     //clear the table 
                                     $('#data').DataTable().clear().draw();

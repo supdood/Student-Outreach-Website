@@ -104,3 +104,20 @@ function updateEdu(str) {
     $('#eduArea').html("<span id='updateEdu'>Update Education Level</span>");
     
 }
+
+function deleteEvent(id) {
+    var xhttp;
+    //If there is nothing in the search box, the suggestion field is left blank. 
+    if (id.length != 0) {
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                if (xhttp.responseText == "pass") {
+                }
+            }
+        }
+        xhttp.open("GET", "ajaxPHP/deleteEvent.php?e="+id, true);
+        xhttp.send(); 
+    }
+    $('#'+id).html('<b>This event has successfully been deleted. <br/> <br/>');
+}

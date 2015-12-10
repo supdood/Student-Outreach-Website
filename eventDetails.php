@@ -26,7 +26,7 @@ if($row['EndDate'] != '')
     $endDate = $row['EndDate'];
 else
     $endDate = "Not Specfied.";
-if($row['Description'] = '')
+if($row['Description'] != '')
 	$description = $row['Description'];
 else
 	$description = "No details available."
