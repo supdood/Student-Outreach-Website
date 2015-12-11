@@ -2,9 +2,9 @@
 include "header.php";
 require_once "inc/dbconnect.php";
 
-if (!isset($_SESSION['email'])) 
+if (!isset($_SESSION['email']) || $_SESSION["access"] > 2) 
 {
-    header ('Location: login.php');
+    header ('Location: index.php');
 }
 ?>
 

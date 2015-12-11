@@ -6,6 +6,11 @@
 ?>
 
 <style type="text/css">
+span{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    
+}
 
 </style>
 
@@ -343,6 +348,8 @@
         
         <button type="submit" name="enter">Submit Survey</button>
     </form>
+    <span> <?php  print $_SESSION["lastQuestionAnswered"]  ?> of <?php  print $_SESSION["questionCount"] ?> </span>
+    <br>
     <span style="text-align:center">  <?php if($notifications != "") print $notifications   ?>   </span>
 
 </div>
