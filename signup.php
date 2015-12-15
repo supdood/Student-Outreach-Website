@@ -241,7 +241,8 @@ if (isset($_POST['submit']))
 			<label for="email">Confirm Email <?php print $emcre; ?></label>
 			<input type="text" name="emailConfirm"/>
 		</div>
-        		<div>
+		<div>
+            <span>Password must be at least 10 characters long containing letters and digits.</span>
 			<label for="email">Password <?php print $pwre; ?></label>
 			<input type="password" name="password"/>
 		</div>
