@@ -20,41 +20,109 @@ $row = mysqli_fetch_array($result);
 
 
 // populate local variables with event data
-$eventName = $row['Title'];
-$startDate = $row['StartDate'];
-if($row['EndDate'] != '')
-    $endDate = $row['EndDate'];
-else
-    $endDate = "Not Specfied.";
-if($row['Description'] != '')
-	$description = $row['Description'];
-else
-	$description = "No details available."
+$areResults = true;
+$t = $row['Title'];
+$sd = $row['StartDate'];
+$ed = $row['EndDate'];
+$des = $row['Description'];
+$eID = $row['EventID'];
+if ($des == "") {
+    
+    $des = "No details available.";
+                        
+}
+                    
+$month = substr($sd, 5, 2);
+switch($month) {
+    case "01":
+        $month = "January";
+        break;
+    case "02":
+        $month = "February";
+        break;
+    case "03":
+        $month = "March";
+        break;
+    case "04":
+        $month = "April";
+        break;
+    case "05":
+        $month = "May";
+        break;
+    case "06":
+        $month = "June";
+        break;
+    case "07":
+        $month = "July";
+        break;
+    case "08":
+        $month = "August";
+        break;
+    case "09":
+        $month = "September";
+        break;
+    case "10":
+        $month = "October";
+        break;
+    case "11":
+        $month = "November";
+        break;
+    default:
+        $month = "December";
+        break;
+}
+                    
+$day = substr($sd, 8, 2);
+$year = substr($sd, 0, 4);
+$date = $month . " " . $day . ", " . $year;
+$hour = substr($sd, 11, 2);
+if ($hour[0] == 0)
+    $hour = substr($hour, 1, 1);
+$ampm = "A.M.";
+if ($hour > 12) {
+    $hour -= 12;
+    $ampm = "P.M.";
+}
+$mins = substr($sd, 14, 2);
+$startTime = $hour . ":" . $mins . " " . $ampm;                    
+$eHour = substr($ed, 11, 2);
+if ($eHour[0] == 0)
+    $eHour = substr($eHour, 1, 1);
+$eAMPM = "A.M.";                    
+
+if ($eHour > 12) {
+    $eHour -= 12;
+    $eAMPM = "P.M.";
+}
+$eMins = substr($ed, 14, 2);
+$endTime = $eHour . ":" . $eMins . " " . $eAMPM;
 
 ?>
 
 <div class="row">
 
 	<table>
-		<tr>
-			<td><label>Event Name: </label></td>
-			<td>  <?php  echo $eventName ;  ?>  </td>
-		</tr>
-
-		<tr>
-			<td><label>Start Date: </label></td>
-			<td>  <?php  echo $startDate ;  ?>  </td>
-		</tr>
-		<tr>
-			<td><label>End Date: </label></td>
-			<td>  <?php  echo $endDate ;  ?>  </td>
-		</tr>
-		<tr>
-			<td><label>Description: </label></td>
-			<td>  <?php  echo $description ;  ?>  </td>
-		</tr>
-
-	</table>
+        <tr>
+            <td><label><b>Event Name: </b></label></td>
+            <td><?php echo $t ?></td>
+        </tr>
+        <tr>
+            <td><label><b>Date: </b></label></td>
+            <td><?php echo $date ?></td>
+        </tr>
+        <tr>
+            <td><label><b>Start Time: </b></label></td>
+            <td><?php echo $startTime ?></td>
+        </tr>
+        <tr>
+            <td><label><b>End Time: </b></label></td>
+            <td><?php echo $endTime ?></td>
+        </tr>
+        <tr>
+            <td><label><b>Description: </b></label></td>
+            <td><?php echo $des ?></td>
+        </tr>
+    </table>
 
 
 </div>
