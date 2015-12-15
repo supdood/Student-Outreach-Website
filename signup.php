@@ -115,7 +115,7 @@ if (isset($_POST['submit']))
     }
     else if (!pwdValidate($pw)) {
         $msg = $msg . "<br /><b>Your Password must be at least 10 characters in length and contain
-                    both numbers and digits.</b>";
+                    both letters and digits.</b>";
         $fields = false;
     }
     if ($are != "*") {
