@@ -194,10 +194,10 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                                     $('#msgD').html('<b>User ' + str + ' is already a regular user.</b>');
                                 }
                                 else if (xhttp.responseText == 'deny') {
-                                    $('#msg').html('<b>User ' + str + ' is a super admin and cannot be demoted.</b>');
+                                    $('#msgD').html('<b>User ' + str + ' is a super admin and cannot be demoted.</b>');
                                 }
                                 else
-                                    $('#msg').html('<b>User ' + str + ' was not found in the database.</b>');
+                                    $('#msgD').html('<b>User ' + str + ' was not found in the database.</b>');
                             }
                         }
                         xhttp.open('GET', 'ajaxPHP/demoteAdmin.php?d='+str, true);
