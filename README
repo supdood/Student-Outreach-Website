@@ -17,7 +17,45 @@ MySQL: MySQL version 5.0.45 configured to allow each user with their own databas
 
 SSH: Secure Shell access is provided using OpenSSH's 4.3 release, allowing only ssh V2 protocol.
 
+Login Instructions:
 
-Login Information:
-SuperAdmin:  
+If you already have an account, simply click the "Log In" link on the navigation bar and login using your email and password.  If you do not have an account, 
+navigate to the sign up page via the link at the top of the page and create a new account. The new account will require you to verify your email in order to
+complete your registration.  After verifying your email, your account is ready to use (keep in mind, newly created accounts are teacher accounts and of access level 3).
+
+Testing Accounts:
+
+Admin Level 1 (SuperAdmin):
+
+username: superAdmin@admin.com
+
+pw:  superadmin1
+
+Access Description: super admins can access the admin page; unlike regular admins, they can promote and demote users to/from admin level2 -- also has access to all features of lower access level accounts
+
+ 
+
+Admin Level 2 (regular admin):
+
+username: admin@admin.com
+
+pw: regularadmin1
+
+Access Description: regular admins cannot promote/demote admin users, but they can also view the admin page and the reporting that is available there  -- also has access to all features of lower access level accounts
+
+ 
+
+Regular User (Teacher) account:
+
+username: teacher@teacher.com
+
+pw: regularteacher1
+
+Access Description:  standard users (teachers) cannot view the admin page; even if the user manual directs to the admin pages -- they will be redirected; teachers can add events and take surveys --- whereas users not logged cannot.
+
+ 
+
+Non Logged-In Visitor:
+
+Access Description: can view home page, event calendar, login/signup 
 
