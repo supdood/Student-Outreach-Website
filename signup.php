@@ -114,8 +114,8 @@ if (isset($_POST['submit']))
         $fields = false;
     }
     else if (!pwdValidate($pw)) {
-        $msg = $msg . "<br /><b>Your Password must be at least 10 characters in length and contain
-                    both numbers and letters.</b>";
+        $msg = $msg . "<br /><b>Your Password must be at least 10 characters in length and contain both numbers and letters.</b>";
+        
         $fields = false;
     }
     if ($are != "*") {
@@ -251,7 +251,7 @@ if (isset($_POST['submit']))
 			<label for="email">Confirm Email <?php print $emcre; ?></label>
 			<input type="text" name="emailConfirm"/>
 		</div>
-        		<div>
+		<div>
 			<label for="email">Password <?php print $pwre; ?></label>
 			<input type="password" name="password"/>
 		</div>
