@@ -47,7 +47,7 @@ if (isset($_SESSION['email'])) {
                 }
                 if (!pwdValidate($pw)) {
                     $msg = $msg . "<b>Your Password must be at least 10 characters in length and contain
-                    both numbers and digits.</b><br />";
+                    both letters and digits.</b><br />";
                     $fields = false;
                 }
                 else if ($_SESSION["attempts"] >= 4) {
