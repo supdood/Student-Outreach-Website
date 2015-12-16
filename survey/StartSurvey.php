@@ -31,9 +31,6 @@
     
     // check for incomplete surveys
     // first get teacherID
-    // $sqlTeacherID = "SELECT ID FROM K12_TEACHER WHERE Email = '".$_SESSION["email"] ."'";
-    // // print $sqlTeacherID;
-    // $teacherIDResult = mysqli_query($conn, $sqlTeacherID) or die(mysql_error());
 
 	// Ensure that teacherID is retrieved
     if($_SESSION["teacherID"] == "") 
@@ -44,26 +41,15 @@
     }
     else
     {
-        // $teacherIDField = mysqli_fetch_array($teacherIDResult); //the query results are objects, in this case, one object
-        // $teacherID = $teacherIDField[0];
-        // // print $teacherID;
 
-        // // create session variable for ID
-        // $_SESSION["teacherID"] = $teacherID;
-
-        // since teacherID found, get incomplete surveys
+        // get incomplete surveys
         $sqlIncompleteSurvey = "";
-		//TODO: include class name in the incompleteSurvey sql statement/array to include more info for the user
-        // $sqlIncompleteSurvey = "SELECT ID as SurveyID, ClassID, LastQuestionAnswered FROM K12_SURVEY WHERE Completed = 'no' AND TeacherID = '" . $teacherID."'";
+		
         $sqlIncompleteSurvey = "SELECT s.ID AS SurveyID, s.ClassID, s.LastQuestionAnswered, c.Name, st.Description FROM K12_SURVEY AS s, K12_CLASS AS c, K12_SURVEYTYPE as st WHERE s.ClassID = c.ID AND Completed =  'no' AND s.SurveyTypeID = st.ID AND TeacherID ='".$_SESSION["teacherID"]."'";
-//         SELECT s.ID AS SurveyID, s.ClassID, s.LastQuestionAnswered, c.Name, st.Description 
-// FROM K12_SURVEY AS s, K12_CLASS AS c, K12_SURVEYTYPE as st
-// WHERE s.ClassID = c.ID AND Completed =  'no' AND TeacherID = 5 AND s.SurveyTypeID = st.ID
-        //print $sqlIncompleteSurvey;
         $incompleteSurveyResult = mysqli_query($conn, $sqlIncompleteSurvey) or die(mysql_error());
         if(!$incompleteSurveyResult)
         {
-            //print "No unfinished Surveys found.";
+            
             $errorMsg .= "No unfinished surveys.<br>";
         }
         else
@@ -74,11 +60,12 @@
             // create session variable for incomplete surveys
             $_SESSION["incompleteSurveys"] = array(); // initialize session variable
 
-            // $incompleteSurveyArray = array();
+            // get the incomplete surveys from a given user
+            // each row is a survey
             while($row = mysqli_fetch_array($incompleteSurveyResult))
             {   
                 $surveyInfoArray = array();
-                // print "<br>". count($row) . "<br>row[0]: " . $row[0] . "<br>row[1]: " . $row[1] . "<br>row[3]: " . $row[2];
+
                 for($j = 0; $j < 5; $j++)
                 {
                     $surveyInfoArray[$j] = $row[$j];
@@ -86,7 +73,6 @@
                 $_SESSION["incompleteSurveys"][$i] = $surveyInfoArray;
                 $i++;
             }
-            //print_r($_SESSION["incompleteSurveys"][0]);
 
             mysqli_free_result($incompleteSurveyResult);
             $conn->next_result();

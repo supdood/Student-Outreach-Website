@@ -15,15 +15,9 @@ $classDescription = mysqli_real_escape_string($conn, $classDescription);
 
 $errorStr .= "<br>" . $className . "<br>" . $classDescription;
 
-// print "Before new class insert<br>";
-// $sqlNewClass = "INSERT INTO  `nelson8_db`.`K12_CLASS` (`ID` ,`Name` ,`Description`) VALUES (NULL ,  '".$className."',  '".$classDescription."')";
-$sqlNewClass = "call K12_CLASS_CREATENEWCLASS('".$className."', '".$classDescription."')";
-// print $sqlNewClass;
-// $result = mysqli_query($conn, $sqlNewClass);
 
-// print count($result);
-// $field = mysqli_fetch_array($result);
-// print $field[0];
+$sqlNewClass = "call K12_CLASS_CREATENEWCLASS('".$className."', '".$classDescription."')";
+
 
 // insert new class, if successful get the new classID
 // and store value in session variable
@@ -31,19 +25,18 @@ if(mysqli_query($conn, $sqlNewClass))
 {
 	$errorStr .= "<br>after new class insert";
 	$sqlGetNewClassID = "Select ID FROM K12_CLASS WHERE Name ='". $className . "'";
-	// print $sqlGetNewClassID;
+	
 	$resultClassID = mysqli_query($conn, $sqlGetNewClassID);
-	// print "after selecting new ClassID insert<br>";
-	// print count($resultClassID);
+	
 	if(count($resultClassID != 0))
 	{
-		// print $resultClassID."<br>";
 		
 		// initialize classID session variable
 		$_SESSION["classID"] = "";
 
 		// fetch value for session variable
 		$field = mysqli_fetch_array($resultClassID);
+		
 		// populate classID session variable
 		$_SESSION["classID"] = $field[0];
 		print $field[0]."<br>";

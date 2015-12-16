@@ -20,6 +20,10 @@
 	// initialize error variable
 	$errorMsg = "";
 	
+	// get boolean value from postSurveyAvail
+	// value specifies if the post survey button should be visible
+	// depends on whether the teacher has taken a PreSurvey
+	
 	if(isset($_GET["postSurveyAvail"])) $postSurveyAvail = $_GET["postSurveyAvail"];
 
 

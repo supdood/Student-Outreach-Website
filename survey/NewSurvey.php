@@ -51,7 +51,6 @@
 
 	// get teachers existing classes
 	
-	// $getTeacherClassesSql = "Select ClassID FROM K12_TEACHER_CLASS Where TeacherID =" . $teacherID;
 	$getTeacherClassesSql = "Select tc.ClassID, c.Name FROM K12_TEACHER_CLASS as tc, K12_CLASS as c Where tc.ClassID = c.ID AND tc.TeacherID = ".$teacherID;
 	$getTeacherClassesResult = mysqli_query($conn, $getTeacherClassesSql);
 
@@ -60,7 +59,6 @@
 		$dropDown = "<select name='existingClasses' id='existingClasses'>";
 		while($val = mysqli_fetch_array($getTeacherClassesResult))
 		{
-			// TODO: obtain the survey type description from the database to notify user which type of survey
 			$dropDown .= "<option id='".$val[0]."'value='".$val[0]."'>".$val[1]."</option>";
 		}
 		$dropDown .= "</select>";
@@ -70,9 +68,10 @@
 ?>
 
 <script>
+
+// pass classID to PrePickSurvey.php
 function getDropdownValue(classID)
 {
-	// var classID = document.getElementById(surveyID).text;
 	var link = "PrePickSurvey.php?classID="+classID;
 	window.location.assign(link);
 
