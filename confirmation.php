@@ -2,6 +2,9 @@
 <?php
 include "header.php";
 require_once "inc/dbconnect.php";
+
+//This is just a simple registration confirmation page in order to direct the user to their email.
+
 ?>
 
 

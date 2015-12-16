@@ -30,6 +30,8 @@ else {
 
 <?php
 
+//initialize the variables
+
 $opw = "";
 $npw = "";
 $msg = "";
@@ -63,6 +65,7 @@ $field = mysqli_fetch_array($result); //the query results are objects, in this c
 $result->close();
 $con->next_result();
 
+//convert the database pulls to a more professional format.
 
 switch ($field[1]) {
         
@@ -118,9 +121,13 @@ $school = $field[0];
         
                 <?php
                 
+                //Pull all events from the database for the event manager
+                
                 $sql = "select * From K12_EVENTS WHERE TeacherID = '".$_SESSION["teacherID"] ."'";
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
                 $areResults = false;
+                
+                //Format and display all the events into a readable format
 
                 while($row = mysqli_fetch_array($result))
                 {
@@ -135,6 +142,9 @@ $school = $field[0];
                         $des = "No details available.";
                         
                     }
+                    
+                    //Convert the numeric values to a more readable format.  The start and end time will be seperated into date,
+                    //start time, and end time.
                     
                     $month = substr($sd, 5, 2);
                      switch($month) {
@@ -246,6 +256,8 @@ $school = $field[0];
 </div>
 
 <script>
+    
+    //initialize the tabs from bootstrap.
     
     $(document).ready(function(){
         $('.nav-tabs a').click(function(){

@@ -1,5 +1,15 @@
 <!-- Include the header -->
-<?php
+<?php 
+
+/**
+
+This file is just a temporary unused file at the moment.  It is a partial implementation of a rich text editor for the event 
+calendar.  At the moment, the page does everything but pull the data from the rich text editor.  This may require pulling 
+the data via javascript and then converting it to a php readable format before sending it to the server.
+
+**/
+
+
 include "header.php";
 require_once "inc/dbconnect.php";
 require_once "inc/util.php";

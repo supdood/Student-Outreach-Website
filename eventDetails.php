@@ -31,7 +31,9 @@ if ($des == "") {
     $des = "No details available.";
                         
 }
-                    
+
+//Convert all the data to a more user-readable format.
+
 $month = substr($sd, 5, 2);
 switch($month) {
     case "01":
@@ -76,14 +78,21 @@ $day = substr($sd, 8, 2);
 $year = substr($sd, 0, 4);
 $date = $month . " " . $day . ", " . $year;
 $hour = substr($sd, 11, 2);
+
+//Removes the zero in front of the hour if the hour is only a single digit.
 if ($hour[0] == 0)
     $hour = substr($hour, 1, 1);
+
 $ampm = "A.M.";
+
+//Checks to see if the hour should be AM or PM.
 if ($hour > 12) {
     $hour -= 12;
     $ampm = "P.M.";
 }
 $mins = substr($sd, 14, 2);
+
+//Concatenates the variables into a readable time.
 $startTime = $hour . ":" . $mins . " " . $ampm;                    
 $eHour = substr($ed, 11, 2);
 if ($eHour[0] == 0)

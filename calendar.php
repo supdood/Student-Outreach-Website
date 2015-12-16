@@ -34,9 +34,10 @@
                 $sql = "select * From K12_EVENTS";
                 //$sql = "call K12_EVENTS_GETEVENTS()";   // use stored procedure
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
-
+                //Each event in the databased is induvidual placed into the "events" portion of the full calendar. 
                 while($row = mysqli_fetch_array($result))
                 {
+                    //Titles must be parsed induvidually to ensure they have no characters that would break the plugin's format.
                     $t = $row['Title'];
                     $t = str_replace("\\", "\\\\", $t);
                     $t = str_replace("'", "\'", $t);
@@ -71,5 +72,5 @@
     
 
 <?php
-    include "calFooter.php";
+    include "footer.php";
     ?>

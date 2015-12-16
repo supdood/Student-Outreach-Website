@@ -24,6 +24,9 @@ else {
 <script src="js/fillDays.js"></script>
 
 <?php
+
+//initialize all the variables
+
 $msg = "";
 $t="";
 $m="";
@@ -40,6 +43,7 @@ $eampm="";
 $st="";
 $et="";
 $desc="";
+
 //runs if the enter button is pressed
 if (isset($_POST['addEvent']))
 {	            
@@ -87,6 +91,8 @@ if (isset($_POST['addEvent']))
     $st = mysqli_real_escape_string($con, $st);
     $et = mysqli_real_escape_string($con, $et);
     */
+    
+    //converting the date and time values to a format that the fullcalendar plugin will understand.
     
     if (strlen($d) == 1)
         $d = 0 . $d;

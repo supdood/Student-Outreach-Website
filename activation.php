@@ -13,6 +13,10 @@ require_once "inc/dbconnect.php";
 			
 				
                 <?php
+    
+                    //Looks to see if there is a get set in the url for the confirmation code, if so, it sets a session variable to
+                    //remember the code as long as the user is logged in.  Else, it sets the code to an empty string for the 
+                    //time being. 
 
                     $code = "";
                     if (isset($_GET['c'])) {
@@ -46,7 +50,7 @@ require_once "inc/dbconnect.php";
                         $em = mysqli_real_escape_string($con, $em);
 
                        $sql = "call K12_TEACHER_VERIFYREGISTRATIONCODE('".$em."', '".$_SESSION['code']."')"; // using stored procedure
-					   //$sql = "select count(*) as c from K12_TEACHER where Email = '" . $em. "' and RegistrationCode = '".$code. "'";
+					   
                         //TODO: replace $sql below with stored procedure call
                         
                         $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
@@ -57,9 +61,9 @@ require_once "inc/dbconnect.php";
                         $result->close();
                         $con->next_result();
 					
+                        //Check to see if there are any teachers matching that email and registration code.
+                        
 					   if ($count > 0) {
-						  
-                           //$sql = "UPDATE K12_TEACHER SET Authenticated = 'yes' WHERE Email = '" .$em. "' and RegistrationCode = '".$code. "'";
 
                            $sql = "call K12_TEACHER_AUTHENTICATE('".$em."', '".$_SESSION['code']."')";    // using stored procedure
                            $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect

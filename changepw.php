@@ -12,6 +12,8 @@ if (!isset($_SESSION['email'])) {
 
 <?php
 
+//initialize the variables
+
 $em = "";
 $opw = "";
 $npw = "";
@@ -20,14 +22,15 @@ $passFields = true;
 $pwMatch = false;
 
 if (isset($_POST['enter'])) {
-                
+               
+    //Check to see if the new password and confirm password match.
     if ($_POST['newpw'] == $_POST['confirmpw']) {
         $pwMatch = true;
     }
     else 
         $passFields = false;
     
-    
+    //Checks to ensure the email is of a valid format
     if (!filter_input(INPUT_POST, 'email',FILTER_VALIDATE_EMAIL)) {
         $msg = $msg . '<b>Please enter a valid email.</b><br/><br/>';
         $passFields = false;
@@ -50,7 +53,8 @@ if (isset($_POST['enter'])) {
     }
     if ($pwMatch == false)
         $msg = $msg . '<b>Please enter matching passwords.</b><br/><br/>';
-                        
+    
+    //If all fields pass the formatting validation, then continue.                 
     if ($passFields == true) {
                         
         //Authentication
@@ -64,8 +68,11 @@ if (isset($_POST['enter'])) {
         $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
         $field = mysqli_fetch_array($result); //the query results are objects, in this case, one object
 					
+        //Check to see if the old password input matches the password in the database. password_verify is a way to compare to the 
+        //input password to the hashed password in the database.
         if (password_verify($opw, $field[0])) {
 				
+            //Hash the new password before sending it to the database.
             $npw = password_hash($npw, PASSWORD_BCRYPT);
             $sql = "UPDATE K12_TEACHER SET Password = '" .$npw. "' WHERE Email = '" .$em. "' and Password = '".$field[0]. "'";
             $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect

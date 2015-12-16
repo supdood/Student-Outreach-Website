@@ -39,6 +39,8 @@ require_once "inc/dbconnect.php";
                             $pwc = trim($_POST['pwc']);
                         }
                         
+                        //Ensure all the fields are filled out in the correct format
+                        
                         if (!pwdValidate($pw)) {
                             $msg = $msg . "<b>Your new Password must be at least 10 characters in length and contain
                             both numbers and letters.</b><br /><br/>";
@@ -56,6 +58,9 @@ require_once "inc/dbconnect.php";
                             //Change the pw
                         
                             $pw = mysqli_real_escape_string($con, $pw);
+                            
+                            //Hash the password before sending it to the database.
+                            
                             $pw = password_hash($pw, PASSWORD_BCRYPT);
 
                             $sql = "UPDATE K12_TEACHER SET Password = '" .$pw. "' WHERE Password = '" .$code. "'";

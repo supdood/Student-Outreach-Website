@@ -13,6 +13,7 @@ $sql = "select AccessLevel From K12_TEACHER WHERE Email = '" .$_SESSION['email']
 $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
 $access = mysqli_fetch_array($result);
 
+//If the user is not an admin, they are redirected off of the page.
 if ($access[0] == 3) {
     Header ("Location:index.php") ;
 }
@@ -64,6 +65,8 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
     
         <?php
         
+        //If the user is a super admin, then the full features of the admin page are loaded.  Otherwise only the reporting feature
+        //is loaded for the user.  
         if ($access[0] == 1) {
             
             $promoteUI = "
