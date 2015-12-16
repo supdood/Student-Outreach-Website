@@ -114,8 +114,8 @@ if (isset($_POST['submit']))
         $fields = false;
     }
     else if (!pwdValidate($pw)) {
-        $msg = $msg . "<br /><b>Your Password must be at least 10 characters in length and contain
-                    both letters and digits.</b>";
+        $msg = $msg . "<br /><b>Your Password must be at least 10 characters in length and contain both numbers and letters.</b>";
+        
         $fields = false;
     }
     if ($are != "*") {
@@ -183,6 +183,16 @@ if (isset($_POST['submit']))
                 //This essentially logs the user in by telling the session the email of the user.
                             
                 $_SESSION['email'] = $em;
+                
+                $sql = "select AccessLevel From K12_TEACHER WHERE Email = '" .$_SESSION['email']."'";
+                $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
+                $access = mysqli_fetch_array($result);
+                $_SESSION['access'] = $access[0];
+                
+                $sql = "SELECT ID FROM K12_TEACHER WHERE Email = '".$em."'";
+                $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
+                $tID = mysqli_fetch_array($result);
+                $_SESSION['teacherID'] = $tID[0];
                             
                 //direct to another file to the confirmation page using query strings
                 Header ("Location:confirmation.php");
@@ -242,7 +252,6 @@ if (isset($_POST['submit']))
 			<input type="text" name="emailConfirm"/>
 		</div>
 		<div>
-            <span>Password must be at least 10 characters long containing letters and digits.</span>
 			<label for="email">Password <?php print $pwre; ?></label>
 			<input type="password" name="password"/>
 		</div>

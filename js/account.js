@@ -31,6 +31,14 @@ function eduField() {
     
 }
 
+function eventFields(id, name, date, st, et, description) {
+    
+    $('#event' + id).html("<input type='text' id='sField' value='" + $('#school').text() + "'></input><button id='eName' onclick='updateSchool(sField.value)'>Save Changes</button>");
+    
+    $('#school').html("");
+    
+}
+
 function updateName(fn, ln) {
     
     var xhttp;

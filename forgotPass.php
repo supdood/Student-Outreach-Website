@@ -67,7 +67,7 @@ if (isset($_SESSION['email'])) {
                         $field = mysqli_fetch_array($result);
                     
                         $subject = "Reset Password";
-                        $body = "Follow the link to reset your password http://corsair.cs.iupui.edu:20741/studentOutreach/resetPass.php?u=".$field[0]."";
+                        $body = "Follow the link to reset your password <a href='http://corsair.cs.iupui.edu:20741/studentOutreach/resetPass.php?u=".$field[0]."'>Click here to reset password.</a>";
                         $mailer = new Mail();
                     
                         if (($mailer->sendMail($em, "", $subject, $body))==true){

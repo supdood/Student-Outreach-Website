@@ -110,7 +110,7 @@ if (isset($_POST['addEvent']))
 	 
     $sql = "call K12_EVENTS_INSERTEVENT('".$t."', '".$date."', '".$endDate."', '".$tid[0]."', '".$code."', '".$desc."')";   // may want to use an autoincrement value for the eventID rather than randomly generated code  
     $result= mysqli_query($con, $sql) or die(mysqli_error($con)); //a non-select statement query will return a result indicating if the 
-    if ($result) $msg = "<b>Your information is entered into the database. </b>";
+    if ($result) $msg = "<b>Your event has been added to the calendar.</b>";
     
 }
 				

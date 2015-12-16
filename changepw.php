@@ -45,7 +45,7 @@ if (isset($_POST['enter'])) {
     }
     if (!pwdValidate($npw)) {
         $msg = $msg . "<b>Your new Password must be at least 10 characters in length and contain
-        both numbers and digits.</b><br /><br/>";
+        both numbers and letters.</b><br /><br/>";
         $passFields = false;
     }
     if ($pwMatch == false)
