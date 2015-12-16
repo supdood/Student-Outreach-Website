@@ -1,0 +1,23 @@
+Authors:  Ethan Fetsko
+		  Jason Nelson
+
+First Iteration submitted: December 16th, 2015
+
+Description:
+The K12 Outreach website goal is to provide a platform for teachers who are interested in expanding computer science and technical related curriculum at their schools.
+
+Software Requirements:
+All plugin packages are included in the source code directory for this project.
+
+Apache 2.2.15 A single shared set of binaries with each user running their own instance, using their own configuration. User's also have access to their own log files and debuging information. Users may stop, start, and query their server instance using Apache's standard control script: apacectl
+
+PHP 5.3.3: PHP enabled for FTP, IMAP, MySQL, gettext, and gd. PHP 5.3.3 is in testing with a goal of allowing each user to utilize modules of their choice through PHP's pear component framework and distribution system.
+
+MySQL: MySQL version 5.0.45 configured to allow each user with their own database. This installation is limited primarily in that access is only allowed from the local host.
+
+SSH: Secure Shell access is provided using OpenSSH's 4.3 release, allowing only ssh V2 protocol.
+
+
+Login Information:
+SuperAdmin:  
+
