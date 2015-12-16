@@ -15,7 +15,13 @@ require_once "inc/dbconnect.php";
                 <?php
 
                     $code = "";
-                    $code = $_GET['c'];
+                    if (isset($_GET['c'])) {
+                        $code = trim($_GET['c']);
+                        $_SESSION["code"] = $code;
+                    }
+                    else if (!isset($_SESSION["code"]))
+                        $_SESSION["code"] = "";
+                        
                     $em = "";
                     $pw = "";
                     $msg = "Please type in your login information and the activation code to complete registration.";
@@ -25,10 +31,6 @@ require_once "inc/dbconnect.php";
 
                     if (isset($_POST['enter'])) {
                         
-                        if (isset($_POST['code']))
-                        {
-                            $code = trim($_POST['code']);
-                        }
                         if (isset($_POST['email']))
                         {
                             $em = trim($_POST['email']);
@@ -43,7 +45,7 @@ require_once "inc/dbconnect.php";
                         $code = mysqli_real_escape_string($con, $code);
                         $em = mysqli_real_escape_string($con, $em);
 
-                       $sql = "call K12_TEACHER_VERIFYREGISTRATIONCODE('".$em."', '".$code."')"; // using stored procedure
+                       $sql = "call K12_TEACHER_VERIFYREGISTRATIONCODE('".$em."', '".$_SESSION['code']."')"; // using stored procedure
 					   //$sql = "select count(*) as c from K12_TEACHER where Email = '" . $em. "' and RegistrationCode = '".$code. "'";
                         //TODO: replace $sql below with stored procedure call
                         
@@ -59,7 +61,7 @@ require_once "inc/dbconnect.php";
 						  
                            //$sql = "UPDATE K12_TEACHER SET Authenticated = 'yes' WHERE Email = '" .$em. "' and RegistrationCode = '".$code. "'";
 
-                           $sql = "call K12_TEACHER_AUTHENTICATE('".$em."', '".$code."')";    // using stored procedure
+                           $sql = "call K12_TEACHER_AUTHENTICATE('".$em."', '".$_SESSION['code']."')";    // using stored procedure
                            $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
                            
                            Header ("Location:account.php") ;
@@ -89,7 +91,7 @@ require_once "inc/dbconnect.php";
                 
                 Email: <input type="text" maxlength = "50" value="<?php print $em; ?>" name="email" id="email"   /> <br />   
                     
-                Activation Code: <input type="text" maxlength = "50" value="<?php print $code; ?>" name="code" id="code"   />
+                Activation Code: <input type="text" maxlength = "50" value="<?php print $_SESSION["code"]; ?>" name="code" id="code"   />
                 
                 <input name="enter" class="btn" type="submit" value="Submit" />
 			
