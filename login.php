@@ -47,7 +47,7 @@ if (isset($_SESSION['email'])) {
                 }
                 if (!pwdValidate($pw)) {
                     $msg = $msg . "<b>Your Password must be at least 10 characters in length and contain
-                    both numbers and digits.</b><br />";
+                    both numbers and letters.</b><br />";
                     $fields = false;
                 }
                 else if ($_SESSION["attempts"] >= 4) {
@@ -105,7 +105,7 @@ if (isset($_SESSION['email'])) {
                         
                         
                     }
-				    else $msg = "<br/><b>The information entered does not match with the records in our database.</b>";
+				    else $msg = "<br/><b>Login failed. Incorrect login information.</b>";
                 }
             }
 		?>

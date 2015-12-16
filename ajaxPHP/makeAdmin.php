@@ -18,8 +18,10 @@ if ($access[0] == 3) {
 }
 else if ($access[0] == 2)
     echo "fail";
-else
+else if ($access[0] == 1)
     echo "deny";
+else
+    echo "none";
 
 
 ?>

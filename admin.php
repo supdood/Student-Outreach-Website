@@ -167,9 +167,11 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                                 else if (xhttp.responseText == 'fail') {
                                     $('#msg').html('<b>User ' + str + ' is already an admin.</b>');
                                 }
-                                else {
+                                else if (xhttp.responseText == 'deny') {
                                     $('#msg').html('<b>User ' + str + ' is already a super admin.</b>');
                                 }
+                                else
+                                    $('#msg').html('<b>User ' + str + ' was not found in the database.</b>');
                             }
                         }
                         xhttp.open('GET', 'ajaxPHP/makeAdmin.php?a='+str, true);
@@ -191,9 +193,11 @@ $msg = "Welcome <span id='greeting'>" . $field[0] . " " . $field[1] . "</span>!<
                                 else if (xhttp.responseText == 'fail') {
                                     $('#msgD').html('<b>User ' + str + ' is already a regular user.</b>');
                                 }
-                                else {
-                                    $('#msgD').html('<b>User ' + str + ' is a super admin and cannot be demoted.</b>');
+                                else if (xhttp.responseText == 'deny') {
+                                    $('#msg').html('<b>User ' + str + ' is a super admin and cannot be demoted.</b>');
                                 }
+                                else
+                                    $('#msg').html('<b>User ' + str + ' was not found in the database.</b>');
                             }
                         }
                         xhttp.open('GET', 'ajaxPHP/demoteAdmin.php?d='+str, true);
